@@ -9,7 +9,7 @@
     
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
   <title>
-    StringModify |  Kevin
+    动态规划——编辑距离 |  Kevin
   </title>
   <meta name="generator" content="hexo-theme-yilia-plus">
   
@@ -44,7 +44,7 @@
     <header class="article-header">
        
 <h1 class="article-title sea-center" style="border-left:0" itemprop="name">
-  StringModify
+  动态规划——编辑距离
 </h1>
  
 
@@ -103,7 +103,11 @@
 <li>插入一个字符  </li>
 <li>删除一个字符  </li>
 <li>替换一个字符  <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">输入：word1 = <span class="string">"horse"</span>, word2 = <span class="string">"ros"</span></span><br><span class="line">输出：<span class="number">3</span></span><br><span class="line">解释：</span><br><span class="line">horse -&gt; rorse (将 <span class="string">'h'</span> 替换为 <span class="string">'r'</span>)</span><br><span class="line">rorse -&gt; rose (删除 <span class="string">'r'</span>)</span><br><span class="line">rose -&gt; ros (删除 <span class="string">'e'</span>)</span><br><span class="line"></span><br><span class="line">来源：力扣（LeetCode）</span><br><span class="line">链接：https:<span class="comment">//leetcode-cn.com/problems/edit-distance</span></span><br></pre></td></tr></table></figure>
-<h3 id="题解"><a href="#题解" class="headerlink" title="题解"></a>题解</h3>典型的动态规划类题目，一开始没想到动态规划解法，是因为没有其他思路，只想到了数组遍历操作（很麻烦也很复杂）。<br>后来看了答案，顿然感悟，觉得有必要把解题思路写一下，总结&amp;反思。<br>其实，动态规划算法分为两步，</li>
+
+</li>
+</ul>
+<h3 id="题解"><a href="#题解" class="headerlink" title="题解"></a>题解</h3><p>典型的动态规划类题目，一开始没想到动态规划解法，是因为没有其他思路，只想到了数组遍历操作（很麻烦也很复杂）。<br>后来看了答案，顿然感悟，觉得有必要把解题思路写一下，总结&amp;反思。<br>其实，动态规划算法分为两步：</p>
+<ul>
 <li>逐步逼近（寻找子问题）</li>
 <li>求解状态转换方程  </li>
 </ul>
@@ -146,7 +150,7 @@
 </tr>
 </tbody></table>
 <p>s[i][j]：表示word1[0:i]编辑到word2[0:j]的最短距离</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> word1[i] == word2[j]:</span><br><span class="line">    s[i][j] = s[i<span class="number">-1</span>][j<span class="number">-1</span>] <span class="comment">// 如果当前字符相等，不需要添加编辑数</span></span><br><span class="line"><span class="keyword">else</span>:</span><br><span class="line">    s[i][j] = <span class="built_in">min</span>(  </span><br><span class="line">                   <span class="number">1</span> + s[i<span class="number">-1</span>][j<span class="number">-1</span>],  <span class="comment">// 修改  </span></span><br><span class="line">                   <span class="number">1</span> + s[i][j<span class="number">-1</span>],    <span class="comment">// 删除  </span></span><br><span class="line">                   <span class="number">1</span> + s[i<span class="number">-1</span>][j],    <span class="comment">// 添加  </span></span><br><span class="line">                 )</span><br></pre></td></tr></table></figure>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> word1[i] == word2[j]:</span><br><span class="line">    s[i][j] = s[i<span class="number">-1</span>][j<span class="number">-1</span>] <span class="comment">// 如果当前字符相等，不需要添加编辑数</span></span><br><span class="line"><span class="keyword">else</span>:</span><br><span class="line">    s[i][j] = <span class="built_in">min</span>(  </span><br><span class="line">                   <span class="number">1</span> + s[i<span class="number">-1</span>][j<span class="number">-1</span>],  <span class="comment">// 替换  </span></span><br><span class="line">                   <span class="number">1</span> + s[i][j<span class="number">-1</span>],    <span class="comment">// 删除  </span></span><br><span class="line">                   <span class="number">1</span> + s[i<span class="number">-1</span>][j],    <span class="comment">// 插入  </span></span><br><span class="line">                 )</span><br></pre></td></tr></table></figure>
 
 <p>Leetcode代码如下：</p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">minDistance</span><span class="params">(<span class="built_in">string</span> word1, <span class="built_in">string</span> word2)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (word1.<span class="built_in">size</span>() == <span class="number">0</span> || word2.<span class="built_in">size</span>() == <span class="number">0</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="built_in">max</span>(word1.<span class="built_in">size</span>(), word2.<span class="built_in">size</span>());</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">const</span> <span class="keyword">int</span> rows = word2.<span class="built_in">size</span>();</span><br><span class="line">        <span class="keyword">const</span> <span class="keyword">int</span> cols = word1.<span class="built_in">size</span>();</span><br><span class="line">        <span class="function"><span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; &gt; <span class="title">tmp</span><span class="params">(rows,<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;(cols))</span></span>;</span><br><span class="line">        <span class="comment">// 初始化第一行和第一列（特殊情况）</span></span><br><span class="line">        <span class="keyword">bool</span> flag = <span class="literal">false</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; word1.<span class="built_in">size</span>(); i++) &#123;</span><br><span class="line">            <span class="keyword">if</span> (word2[<span class="number">0</span>] == word1[i]) &#123;</span><br><span class="line">                tmp[<span class="number">0</span>][i] = i;</span><br><span class="line">                flag = <span class="literal">true</span>;</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                <span class="keyword">if</span> (flag) &#123;</span><br><span class="line">                    tmp[<span class="number">0</span>][i] = i;</span><br><span class="line">                &#125; <span class="keyword">else</span>&#123;</span><br><span class="line">                    tmp[<span class="number">0</span>][i] = i + <span class="number">1</span>;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        flag = <span class="literal">false</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; word2.<span class="built_in">size</span>(); i++) &#123;</span><br><span class="line">            <span class="keyword">if</span> (word1[<span class="number">0</span>] == word2[i]) &#123;</span><br><span class="line">                tmp[i][<span class="number">0</span>] = i;</span><br><span class="line">                flag = <span class="literal">true</span>;</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                <span class="keyword">if</span> (flag) &#123;</span><br><span class="line">                    tmp[i][<span class="number">0</span>] = i;</span><br><span class="line">                &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                    tmp[i][<span class="number">0</span>] = i + <span class="number">1</span>;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 根据状态转换方程写出循环</span></span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt; word2.<span class="built_in">size</span>(); i++) &#123;</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">1</span>; j &lt; word1.<span class="built_in">size</span>(); j++) &#123;</span><br><span class="line">                <span class="keyword">if</span> (word2[i] == word1[j]) &#123;</span><br><span class="line">                    tmp[i][j] = tmp[i<span class="number">-1</span>][j<span class="number">-1</span>];</span><br><span class="line">                &#125; <span class="keyword">else</span> &#123;    </span><br><span class="line">                    tmp[i][j] = <span class="built_in">min</span>(<span class="number">1</span> + tmp[i<span class="number">-1</span>][j<span class="number">-1</span>],</span><br><span class="line">                                    <span class="built_in">min</span>(<span class="number">1</span> + tmp[i][j<span class="number">-1</span>], <span class="number">1</span> + tmp[i<span class="number">-1</span>][j]));</span><br><span class="line">                &#125;</span><br><span class="line">                </span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> tmp[word2.<span class="built_in">size</span>()<span class="number">-1</span>][word1.<span class="built_in">size</span>()<span class="number">-1</span>];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
@@ -219,10 +223,19 @@
   
   <nav class="article-nav">
     
+      <a href="/2020/05/01/test-class/" class="article-nav-link">
+        <strong class="article-nav-caption">上一篇</strong>
+        <div class="article-nav-title">
+          
+            test_class
+          
+        </div>
+      </a>
     
-      <a href="/2020/04/17/page/" class="article-nav-link">
+    
+      <a href="/2020/04/12/SmartPoint/" class="article-nav-link">
         <strong class="article-nav-caption">下一篇</strong>
-        <div class="article-nav-title">page</div>
+        <div class="article-nav-title">智能指针</div>
       </a>
     
   </nav>
@@ -374,6 +387,10 @@
   <ul class="nav">
     <li class="nav-item">
       
+      <a class="nav-item-link nav-item-search"  title="Search">
+        <i class="ri-search-line"></i>
+      </a>
+      
       
       <a class="nav-item-link" target="_blank" href="/atom.xml" title="RSS Feed">
         <i class="ri-rss-line"></i>
@@ -422,6 +439,21 @@
 
 <script src="/js/lazyload.min.js"></script>
 
+
+<script>
+  try {
+    var typed = new Typed("#subtitle", {
+      strings: ['其实我们每个人的生活都是一个世界，即使最平凡的人也要为他生活的那个世界而奋斗...', '', ''],
+      startDelay: 0,
+      typeSpeed: 200,
+      loop: true,
+      backSpeed: 200,
+      showCursor: false
+    });
+  } catch (err) {
+  }
+
+</script>
 
 
 
