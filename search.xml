@@ -33,6 +33,12 @@
 <figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="built_in">shared_ptr</span>&lt;<span class="keyword">int</span>&gt; <span class="title">ptr0</span><span class="params">(<span class="keyword">new</span> <span class="keyword">int</span>(<span class="number">10</span>))</span></span>;</span><br><span class="line"><span class="built_in">shared_ptr</span>&lt;<span class="keyword">int</span>&gt; ptr3 = make_shared&lt;<span class="keyword">int</span>&gt;(<span class="number">10</span>);</span><br></pre></td></tr></table></figure>
 <p>而make_shared可以把两块内存整合到一起，只需进行一次内存分配，效率较高，但是引入一个问题：<br>origin: 强引用（shared_ptr）计数为0时，即可释放数据块内存，弱引用（weak_ptr）计数为0时，释放控制块<br>now: 强引用和弱引用同时为0，才可以释放内存块，因为控制块和数据块裹绑到一起了。</p>
 ]]></content>
+      <categories>
+        <category>学习总结</category>
+      </categories>
+      <tags>
+        <tag>C++</tag>
+      </tags>
   </entry>
   <entry>
     <title>动态规划——编辑距离</title>
@@ -93,32 +99,11 @@
 
 <p>Leetcode代码如下：</p>
 <figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">minDistance</span><span class="params">(<span class="built_in">string</span> word1, <span class="built_in">string</span> word2)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (word1.<span class="built_in">size</span>() == <span class="number">0</span> || word2.<span class="built_in">size</span>() == <span class="number">0</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="built_in">max</span>(word1.<span class="built_in">size</span>(), word2.<span class="built_in">size</span>());</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">const</span> <span class="keyword">int</span> rows = word2.<span class="built_in">size</span>();</span><br><span class="line">        <span class="keyword">const</span> <span class="keyword">int</span> cols = word1.<span class="built_in">size</span>();</span><br><span class="line">        <span class="function"><span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; &gt; <span class="title">tmp</span><span class="params">(rows,<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;(cols))</span></span>;</span><br><span class="line">        <span class="comment">// 初始化第一行和第一列（特殊情况）</span></span><br><span class="line">        <span class="keyword">bool</span> flag = <span class="literal">false</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; word1.<span class="built_in">size</span>(); i++) &#123;</span><br><span class="line">            <span class="keyword">if</span> (word2[<span class="number">0</span>] == word1[i]) &#123;</span><br><span class="line">                tmp[<span class="number">0</span>][i] = i;</span><br><span class="line">                flag = <span class="literal">true</span>;</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                <span class="keyword">if</span> (flag) &#123;</span><br><span class="line">                    tmp[<span class="number">0</span>][i] = i;</span><br><span class="line">                &#125; <span class="keyword">else</span>&#123;</span><br><span class="line">                    tmp[<span class="number">0</span>][i] = i + <span class="number">1</span>;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        flag = <span class="literal">false</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; word2.<span class="built_in">size</span>(); i++) &#123;</span><br><span class="line">            <span class="keyword">if</span> (word1[<span class="number">0</span>] == word2[i]) &#123;</span><br><span class="line">                tmp[i][<span class="number">0</span>] = i;</span><br><span class="line">                flag = <span class="literal">true</span>;</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                <span class="keyword">if</span> (flag) &#123;</span><br><span class="line">                    tmp[i][<span class="number">0</span>] = i;</span><br><span class="line">                &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                    tmp[i][<span class="number">0</span>] = i + <span class="number">1</span>;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 根据状态转换方程写出循环</span></span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt; word2.<span class="built_in">size</span>(); i++) &#123;</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">1</span>; j &lt; word1.<span class="built_in">size</span>(); j++) &#123;</span><br><span class="line">                <span class="keyword">if</span> (word2[i] == word1[j]) &#123;</span><br><span class="line">                    tmp[i][j] = tmp[i<span class="number">-1</span>][j<span class="number">-1</span>];</span><br><span class="line">                &#125; <span class="keyword">else</span> &#123;    </span><br><span class="line">                    tmp[i][j] = <span class="built_in">min</span>(<span class="number">1</span> + tmp[i<span class="number">-1</span>][j<span class="number">-1</span>],</span><br><span class="line">                                    <span class="built_in">min</span>(<span class="number">1</span> + tmp[i][j<span class="number">-1</span>], <span class="number">1</span> + tmp[i<span class="number">-1</span>][j]));</span><br><span class="line">                &#125;</span><br><span class="line">                </span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> tmp[word2.<span class="built_in">size</span>()<span class="number">-1</span>][word1.<span class="built_in">size</span>()<span class="number">-1</span>];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>]]></content>
-  </entry>
-  <entry>
-    <title>test_class</title>
-    <url>/2020/05/01/test-class/</url>
-    <content><![CDATA[<p>test0</p>
-]]></content>
       <categories>
-        <category>生活</category>
-        <category>学习2</category>
-        <category>学习3</category>
+        <category>学习总结</category>
       </categories>
       <tags>
-        <tag>hello</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>test_example</title>
-    <url>/2020/05/01/test-example/</url>
-    <content><![CDATA[<p>this is kevin</p>
-]]></content>
-      <categories>
-        <category>生活</category>
-        <category>学习3</category>
-      </categories>
-      <tags>
-        <tag>hello</tag>
+        <tag>算法</tag>
       </tags>
   </entry>
 </search>
