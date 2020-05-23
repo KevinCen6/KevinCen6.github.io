@@ -124,4 +124,84 @@
         <tag>算法</tag>
       </tags>
   </entry>
+  <entry>
+    <title>左值与右值</title>
+    <url>/2020/05/08/%E5%B7%A6%E5%80%BC%E4%B8%8E%E5%8F%B3%E5%80%BC/</url>
+    <content><![CDATA[<h2 id="左值与右值"><a href="#左值与右值" class="headerlink" title="左值与右值"></a>左值与右值</h2><p>通俗地说。以赋值符号 = 为界，= 左边的就是左值，= 右边就是右值。 int a = b; a就是左值，b作为右值赋值给a（b的右值赋值给a）。左值右值概念是相对而言的。<br>其中左值也分为可赋值左值和不可赋值左值（const）。<br>其实更深层次可以理解为，L-value中的L指的是Location，表示可寻址。Avalue (computer science)that has an address.<br>R-value中的R指的是Read，表示可读。in computer science, a value that does not have an address in a computer language.</p>
+<h2 id="左值引用与右值引用"><a href="#左值引用与右值引用" class="headerlink" title="左值引用与右值引用"></a>左值引用与右值引用</h2><h3 id="来源"><a href="#来源" class="headerlink" title="来源"></a>来源</h3><p>C++11之前的引用都是左值引用，C++11引入了右值引用，是为了避免（节省）临时变量申请释放造成的开销。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">作为一种追求执行效率的语言，C++在用临时对象或函数返回值给左值对象赋值时的深度拷贝（deep copy）一直受到诟病。考虑到临时对象的生命期仅在表达式中持续，如果把临时对象的内容直接移动（move）给被赋值的左值对象，效率改善将是显著的。这就是移动语义的来源。 </span><br><span class="line">右值引用就是为了实现移动语义与完美转发所需要而设计出来的新的数据类型。</span><br><span class="line">——https:&#x2F;&#x2F;wiki.hk.xileso.top&#x2F;wiki&#x2F;右值引用</span><br></pre></td></tr></table></figure>
+
+<p>move函数可以（无条件）把一个左值转换成右值引用。</p>
+<h2 id="异常案例"><a href="#异常案例" class="headerlink" title="异常案例"></a>异常案例</h2><p>Note also that returning an rvalue reference is an error if the returned object is a local nonstatic object:</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">X&amp;&amp; foo ()</span><br><span class="line">&#123;</span><br><span class="line">    X x;</span><br><span class="line">    ...</span><br><span class="line">    return x; &#x2F;&#x2F; ERROR: returns reference to nonexisting object</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>具名的右值引用被当作左值<br>如果没有显式写出移动构造函数，默认调用拷贝构造函数，没有默认移动构造函数之说。</p>
+]]></content>
+      <categories>
+        <category>学习总结</category>
+      </categories>
+      <tags>
+        <tag>C++</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>完美转发</title>
+    <url>/2020/05/08/%E5%AE%8C%E7%BE%8E%E8%BD%AC%E5%8F%91/</url>
+    <content><![CDATA[]]></content>
+  </entry>
+  <entry>
+    <title>拷贝构造函数</title>
+    <url>/2020/05/08/%E6%8B%B7%E8%B4%9D%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0%E4%B8%8E%E7%A7%BB%E5%8A%A8%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0/</url>
+    <content><![CDATA[<h2 id="初始化与赋值"><a href="#初始化与赋值" class="headerlink" title="初始化与赋值"></a>初始化与赋值</h2><p>声明对象时同时赋值 -&gt; 初始化，初始化只有一次<br>声明对象后，再赋值 -&gt; （=）赋值，赋值可以多次  </p>
+<ul>
+<li>初始化调用的是拷贝构造函数（构造函数就是用来初始化对象的）</li>
+<li>赋值调用的是重载 = 运算符（两个对象都已存在并完成初始化）</li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">A</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    A() &#123;</span><br><span class="line">        <span class="built_in">cout</span> &lt;&lt; <span class="string">"A class -&gt; Default Constructor"</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    A(<span class="keyword">const</span> <span class="keyword">int</span>&amp; val) &#123;</span><br><span class="line">        <span class="built_in">cout</span> &lt;&lt; <span class="string">"A class -&gt; Parameter Constructor"</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    A(<span class="keyword">const</span> A&amp; tmp) &#123;   <span class="comment">// 拷贝构造函数</span></span><br><span class="line">        <span class="built_in">cout</span> &lt;&lt; <span class="string">"A class -&gt; CopyConstructor"</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    A&amp; <span class="keyword">operator</span>=(<span class="keyword">const</span> A&amp; tmp) &#123;    <span class="comment">// 重载运算符=</span></span><br><span class="line">        <span class="keyword">if</span> (<span class="keyword">this</span> != &amp;tmp) &#123;</span><br><span class="line">            <span class="comment">// pass</span></span><br><span class="line">        &#125;</span><br><span class="line">        <span class="built_in">cout</span> &lt;&lt; <span class="string">"A class -&gt; = operator"</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">        <span class="keyword">return</span> *<span class="keyword">this</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    ~A() &#123;</span><br><span class="line">        <span class="built_in">cout</span> &lt;&lt; <span class="string">"A class -&gt; DeConstructor"</span> &lt;&lt; <span class="built_in">endl</span>; </span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="function">A <span class="title">obja</span><span class="params">(<span class="number">5</span>)</span></span>;    </span><br><span class="line">    <span class="function">A <span class="title">objb</span><span class="params">(obja)</span></span>;   <span class="comment">// 初始化，调用拷贝构造函数</span></span><br><span class="line">    A objb = obja;  <span class="comment">// 初始化，调用拷贝构造函数</span></span><br><span class="line">    A objc;</span><br><span class="line">    objc = obja;    <span class="comment">// 赋值，调用重载运算符操作</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="拷贝构造函数"><a href="#拷贝构造函数" class="headerlink" title="拷贝构造函数"></a>拷贝构造函数</h2><p>以下三种情况都会调用拷贝构造函数：</p>
+<ul>
+<li>一个对象以值传递的方式传入函数体（参数） </li>
+<li>一个对象以值传递的方式从函数返回 </li>
+<li>一个对象需要通过另外一个对象进行初始化</li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="function">A <span class="title">GetObject</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    A tmpa;</span><br><span class="line">    <span class="keyword">return</span> tmpa;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">main:</span><br><span class="line">A obja = GetObject();</span><br></pre></td></tr></table></figure>
+<p>上面这段代码调用了3次构造函数，3次析构函数<br><img src="initialize/result_0.png" alt="avatar"></p>
+<ol>
+<li>GetObject().tmpa 调用默认构造函数</li>
+<li>GetObject().tmpa -&gt; 返回值X，调用拷贝构造函数</li>
+<li>GetObject().tmpa 调用析构函数</li>
+<li>返回值X -&gt; obja，调用拷贝构造函数</li>
+<li>返回值X 调用析构函数</li>
+<li>obja 调用析构函数</li>
+</ol>
+<p>P.S. 需要加上“-fno-elide-constructors”选项，不然gcc编译器会对返回值进行优化，即RVO（return value optimazation）。</p>
+<h2 id="移动构造函数"><a href="#移动构造函数" class="headerlink" title="移动构造函数"></a>移动构造函数</h2><p>浅拷贝：对象属性值的拷贝，如果对象含有指针，则两对象指针值一样，指向空间也一样，后面析构时（释放指针空间）导致重复释放。<br>深拷贝：针对浅拷贝指针问题，显式实现拷贝构造函数，在函数内部重新申请一块空间。两对象指针指向空间独立。</p>
+<p>然而深拷贝就引入效率问题，如果对象拷贝完成后就不再使用了，那么反复申请释放内存空间开销就比较大了。其实这可以通过特殊“浅拷贝”——移动构造函数来实现。</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">A</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    A(<span class="keyword">int</span> val) &#123;</span><br><span class="line">        len = val;</span><br><span class="line">        data = <span class="keyword">new</span> <span class="keyword">int</span>[len];</span><br><span class="line">        <span class="built_in">cout</span> &lt;&lt; <span class="string">"A class -&gt; Parameter Constructor"</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    A(<span class="keyword">const</span> A&amp; tmp) &#123;</span><br><span class="line">        len = tmp.len;</span><br><span class="line">        data = <span class="keyword">new</span> <span class="keyword">int</span>[len];</span><br><span class="line">        <span class="built_in">cout</span> &lt;&lt; <span class="string">"A class -&gt; CopyConstructor"</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    A(A&amp;&amp; tmp) &#123;</span><br><span class="line">        len = tmp.len;</span><br><span class="line">        data = tmp.data;</span><br><span class="line">        tmp.data = <span class="literal">nullptr</span>;</span><br><span class="line">        <span class="built_in">cout</span> &lt;&lt; <span class="string">"A class -&gt; MoveConstructor"</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    ~A() &#123;</span><br><span class="line">        <span class="keyword">delete</span>[] data;</span><br><span class="line">        <span class="built_in">cout</span> &lt;&lt; <span class="string">"A class -&gt; DeConstructor"</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">int</span>* <span class="title">GetDataAddress</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> data;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    <span class="keyword">int</span> *data;</span><br><span class="line">    <span class="keyword">int</span> len;</span><br><span class="line">    <span class="built_in">string</span> name;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="function">A <span class="title">tmpa</span><span class="params">(<span class="number">10</span>)</span></span>;</span><br><span class="line">    <span class="function">A <span class="title">tmpb</span><span class="params">(<span class="built_in">move</span>(tmpa))</span></span>;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; tmpa.GetDataAddress() &lt;&lt; <span class="built_in">endl</span>;  <span class="comment">// 有点违规，理论上move调用后，不应该再使用tmpa</span></span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; tmpb.GetDataAddress() &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>]]></content>
+      <categories>
+        <category>学习总结</category>
+      </categories>
+      <tags>
+        <tag>C++</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Forward &amp; 完美转发</title>
+    <url>/2020/05/23/Forward/</url>
+    <content><![CDATA[<h2 id="Forward"><a href="#Forward" class="headerlink" title="Forward"></a>Forward</h2><p>由来：C++规定函数参数都是左值（引用），那么模板函数中的参数，不管实参是左值（引用）还是右值（引用），形参都是左值（引用）。</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">test</span><span class="params">(<span class="keyword">int</span>&amp; a)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="string">"call &amp; test"</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">test</span><span class="params">(<span class="keyword">int</span>&amp;&amp; a)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="string">"call &amp;&amp; test"</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">func</span><span class="params">(T&amp;&amp; a)</span> </span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    test(a);</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> a = <span class="number">10</span>;</span><br><span class="line">    func(a);</span><br><span class="line">    func(<span class="number">10</span>);</span><br><span class="line">    <span class="keyword">int</span> &amp;b = a;</span><br><span class="line">    func(b);</span><br><span class="line">    func(<span class="built_in">move</span>(b));</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>输出如下：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">call &amp; test</span><br><span class="line">call &amp; test</span><br><span class="line">call &amp; test</span><br><span class="line">call &amp; test</span><br></pre></td></tr></table></figure>
+<p>都是调用的左值引用参数的test函数</p>
+<h2 id="完美转发"><a href="#完美转发" class="headerlink" title="完美转发"></a>完美转发</h2><p>forward就是为了解决这个问题的，即把参数的引用类别（左值引用/右值引用）完美地传达给下一级函数。<br>修改上面模板函数，如下：</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">func</span><span class="params">(T&amp;&amp; a)</span> </span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    test(forward&lt;T&gt;(a));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>输出结果如下：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">call &amp; test</span><br><span class="line">call &amp;&amp; test</span><br><span class="line">call &amp; test</span><br><span class="line">call &amp;&amp; test</span><br></pre></td></tr></table></figure>]]></content>
+  </entry>
+  <entry>
+    <title>Leetcode-加油站</title>
+    <url>/2020/05/23/Leetcode-%E5%8A%A0%E6%B2%B9%E7%AB%99/</url>
+    <content><![CDATA[]]></content>
+  </entry>
 </search>
