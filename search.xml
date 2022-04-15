@@ -145,11 +145,6 @@
       </tags>
   </entry>
   <entry>
-    <title>完美转发</title>
-    <url>/2020/05/08/%E5%AE%8C%E7%BE%8E%E8%BD%AC%E5%8F%91/</url>
-    <content><![CDATA[]]></content>
-  </entry>
-  <entry>
     <title>拷贝构造函数</title>
     <url>/2020/05/08/%E6%8B%B7%E8%B4%9D%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0%E4%B8%8E%E7%A7%BB%E5%8A%A8%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0/</url>
     <content><![CDATA[<h2 id="初始化与赋值"><a href="#初始化与赋值" class="headerlink" title="初始化与赋值"></a>初始化与赋值</h2><p>声明对象时同时赋值 -&gt; 初始化，初始化只有一次<br>声明对象后，再赋值 -&gt; （=）赋值，赋值可以多次  </p>
@@ -200,8 +195,45 @@
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">call &amp; test</span><br><span class="line">call &amp;&amp; test</span><br><span class="line">call &amp; test</span><br><span class="line">call &amp;&amp; test</span><br></pre></td></tr></table></figure>]]></content>
   </entry>
   <entry>
-    <title>Leetcode-加油站</title>
-    <url>/2020/05/23/Leetcode-%E5%8A%A0%E6%B2%B9%E7%AB%99/</url>
-    <content><![CDATA[]]></content>
+    <title>TCP/IP协议簇</title>
+    <url>/2020/06/26/TCP-IP%E5%8D%8F%E8%AE%AE%E7%B0%87/</url>
+    <content><![CDATA[<p>TCP/IP（Transmission Control Protocol/Internet Protocol，传输控制协议/网际协议）是指能够在多个不同网络间实现信息传输的协议簇。TCP/IP协议不仅仅指的是TCP 和IP两个协议，而是指一个由FTP、SMTP、TCP、UDP、IP等协议构成的协议簇， 只是因为在TCP/IP协议中TCP协议和IP协议最具代表性，所以被称为TCP/IP协议。<a href="#refer_0"><sup>1</sup></a></p>
+<p>tcp/ip分为四层模型，</p>
+<table>
+<thead>
+<tr>
+<th>Level</th>
+<th>Description</th>
+<th>Represent Protocal</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>应用层</td>
+<td>根据需求选择协议</td>
+<td>email(SMTP), web(http)</td>
+</tr>
+<tr>
+<td>传输层</td>
+<td>数据包传输</td>
+<td>TCP UDP</td>
+</tr>
+<tr>
+<td>网络层</td>
+<td>建立网络连接与ip寻址</td>
+<td>IP</td>
+</tr>
+<tr>
+<td>链路层</td>
+<td>传输的物理媒介</td>
+<td>网络接口与硬件…</td>
+</tr>
+</tbody></table>
+<h2 id="TCP为什么需要三次握手"><a href="#TCP为什么需要三次握手" class="headerlink" title="TCP为什么需要三次握手"></a>TCP为什么需要三次握手</h2><p>三次握手流程图：<br><img src="https://i.loli.net/2020/06/26/nOBdjPLRGzyu9bU.jpg" alt="avatar"><br>第一次握手：客户端发送标记位（SYN=1, ACK=0），seq=x（随机）的数据包给服务器<br>第二次握手：服务端接收到了包，给客户端回传标记位（SYN=1, ACK=1），seq=y，ack=x+1的数据包<br>第三次握手：客户端再发送标记位（ACK=1)，seq=x+1，ack=y+1，数据包确认连接</p>
+<h3 id="为啥需要三次握手"><a href="#为啥需要三次握手" class="headerlink" title="为啥需要三次握手"></a>为啥需要三次握手</h3><p>三次握手是确认双方可靠传输的最少握手次数，即双方都有正常收发功能。<br>第一次握手：客户端正常发<br>第二次握手：服务端正常收，发<br>第三次握手：客户端正常收（发）</p>
+<h2 id="IP-DNS"><a href="#IP-DNS" class="headerlink" title="IP DNS"></a>IP DNS</h2><p>IP：利用ip地址与MAC地址进行网络层的数据寻址与传输<br>DNS：ip地址不符合人的记忆习惯，DNS提供域名到ip的相互转换功能。（处于应用层）</p>
+<h3 id="四次挥手"><a href="#四次挥手" class="headerlink" title="四次挥手"></a>四次挥手</h3><p>第一次挥手：客户端发送（FIN=1，序号seq=u），并且停止再发送数据，等待服务端应答；<br>第二次挥手：服务端收到后即发送（ACK=1，ack=u+1，序号seq=v）<br>第三次挥手：服务端数据传输完成后，再发送（ACK=1，ack=u+1，序号seq=w）；<br>第四次挥手：客户端收到后，再发送确认报文段（ACK=1，ack=w+1，序号seq=u+1），时间计数超过后自动释放。</p>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><div id="refer_0"></div>
+- [1] [百度百科](https://baike.baidu.com/item/TCP%2FIP协议/212915?fromtitle=tcp%2Fip&fromid=214077&fr=aladdin#reference-[1]-7649-wrap)
+]]></content>
   </entry>
 </search>
