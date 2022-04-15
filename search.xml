@@ -1,41 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>Forward &amp; 完美转发</title>
-    <url>/2020/05/23/Forward/</url>
-    <content><![CDATA[<h2 id="Forward"><a href="#Forward" class="headerlink" title="Forward"></a>Forward</h2><p>由来：C++规定函数参数都是左值（引用），那么模板函数中的参数，不管实参是左值（引用）还是右值（引用），形参都是左值（引用）。</p>
-<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">test</span><span class="params">(<span class="keyword">int</span>&amp; a)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="string">"call &amp; test"</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">test</span><span class="params">(<span class="keyword">int</span>&amp;&amp; a)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="string">"call &amp;&amp; test"</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">func</span><span class="params">(T&amp;&amp; a)</span> </span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    test(a);</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> a = <span class="number">10</span>;</span><br><span class="line">    func(a);</span><br><span class="line">    func(<span class="number">10</span>);</span><br><span class="line">    <span class="keyword">int</span> &amp;b = a;</span><br><span class="line">    func(b);</span><br><span class="line">    func(<span class="built_in">move</span>(b));</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>输出如下：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">call &amp; test</span><br><span class="line">call &amp; test</span><br><span class="line">call &amp; test</span><br><span class="line">call &amp; test</span><br></pre></td></tr></table></figure>
-<p>都是调用的左值引用参数的test函数</p>
-<h2 id="完美转发"><a href="#完美转发" class="headerlink" title="完美转发"></a>完美转发</h2><p>forward就是为了解决这个问题的，即把参数的引用类别（左值引用/右值引用）完美地传达给下一级函数。<br>修改上面模板函数，如下：</p>
-<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">func</span><span class="params">(T&amp;&amp; a)</span> </span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    test(forward&lt;T&gt;(a));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>输出结果如下：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">call &amp; test</span><br><span class="line">call &amp;&amp; test</span><br><span class="line">call &amp; test</span><br><span class="line">call &amp;&amp; test</span><br></pre></td></tr></table></figure>]]></content>
-  </entry>
-  <entry>
-    <title>智能指针</title>
-    <url>/2020/04/12/SmartPoint/</url>
-    <content><![CDATA[<h2 id="智能指针"><a href="#智能指针" class="headerlink" title="智能指针"></a>智能指针</h2><p>头文件 <code>#include &lt;memory&gt;</code>  </p>
-<h3 id="unique-ptr"><a href="#unique-ptr" class="headerlink" title="unique_ptr"></a>unique_ptr</h3><p>独占指针对象，引用计数为1，无拷贝构造函数,无赋值方法，可以通过move转移所有权。  </p>
-<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="function"><span class="built_in">unique_ptr</span>&lt;<span class="keyword">int</span>&gt; <span class="title">ptr0</span><span class="params">(<span class="keyword">new</span> <span class="keyword">int</span>(<span class="number">10</span>))</span></span>;</span><br><span class="line">    <span class="comment">//unique_ptr&lt;int&gt; ptr1 = ptr0;  // 独占指针对象，无拷贝构造函数，编译出错</span></span><br><span class="line"></span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; *ptr0 &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    <span class="built_in">unique_ptr</span>&lt;<span class="keyword">int</span>&gt; ptr2 = <span class="built_in">move</span>(ptr0);  <span class="comment">// 可以通过move函数转移所有权，原ptr0失效</span></span><br><span class="line">    </span><br><span class="line">    <span class="keyword">if</span> (<span class="literal">nullptr</span> == ptr0) &#123;</span><br><span class="line">        <span class="built_in">cout</span> &lt;&lt; <span class="string">"ptr0 set to nullptr."</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; *ptr2 &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h3 id="shared-ptr"><a href="#shared-ptr" class="headerlink" title="shared_ptr"></a>shared_ptr</h3><p>共享指针对象，可以赋值给shared_ptr或weak_ptr，强引用，决定指针对象的生命周期</p>
-<h3 id="weak-ptr"><a href="#weak-ptr" class="headerlink" title="weak_ptr"></a>weak_ptr</h3><p>弱指针引用，只引用，不计数，不能决定对象的生命周期；使用前需lock判断是否有效</p>
-<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="function"><span class="built_in">shared_ptr</span>&lt;<span class="keyword">int</span>&gt; <span class="title">ptr0</span><span class="params">(<span class="keyword">new</span> <span class="keyword">int</span>(<span class="number">10</span>))</span></span>;</span><br><span class="line">    <span class="function"><span class="built_in">shared_ptr</span>&lt;<span class="keyword">int</span>&gt; <span class="title">ptr1</span><span class="params">(ptr0)</span></span>;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; ptr0.use_count() &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line"></span><br><span class="line">    weak_ptr&lt;<span class="keyword">int</span>&gt; ptr2 = ptr0;</span><br><span class="line">    ptr0.reset();   <span class="comment">// 释放指针，引用计数减 1</span></span><br><span class="line">    ptr1.reset();</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (ptr2.expired()) &#123;   <span class="comment">// 引用计数为空时，expired 返回true，否则返回false</span></span><br><span class="line">        <span class="built_in">cout</span> &lt;&lt; <span class="string">"ptr2.lock return nullptr."</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="built_in">cout</span> &lt;&lt; *ptr2.lock() &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h3 id="make-shared"><a href="#make-shared" class="headerlink" title="make_shared"></a>make_shared</h3><p>shared_ptr + new 函数分为控制块（引用计数）和数据块（真实申请空间），两块内存空间两次分配，效率较低</p>
-<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="built_in">shared_ptr</span>&lt;<span class="keyword">int</span>&gt; <span class="title">ptr0</span><span class="params">(<span class="keyword">new</span> <span class="keyword">int</span>(<span class="number">10</span>))</span></span>;</span><br><span class="line"><span class="built_in">shared_ptr</span>&lt;<span class="keyword">int</span>&gt; ptr3 = make_shared&lt;<span class="keyword">int</span>&gt;(<span class="number">10</span>);</span><br></pre></td></tr></table></figure>
-<p>而make_shared可以把两块内存整合到一起，只需进行一次内存分配，效率较高，但是引入一个问题：<br>origin: 强引用（shared_ptr）计数为0时，即可释放数据块内存，弱引用（weak_ptr）计数为0时，释放控制块<br>now: 强引用和弱引用同时为0，才可以释放内存块，因为控制块和数据块裹绑到一起了。</p>
-]]></content>
-      <categories>
-        <category>学习总结</category>
-      </categories>
-      <tags>
-        <tag>C++</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>TCP/IP协议簇</title>
     <url>/2020/06/26/TCP-IP%E5%8D%8F%E8%AE%AE%E7%B0%87/</url>
     <content><![CDATA[<p>TCP/IP（Transmission Control Protocol/Internet Protocol，传输控制协议/网际协议）是指能够在多个不同网络间实现信息传输的协议簇。TCP/IP协议不仅仅指的是TCP 和IP两个协议，而是指一个由FTP、SMTP、TCP、UDP、IP等协议构成的协议簇， 只是因为在TCP/IP协议中TCP协议和IP协议最具代表性，所以被称为TCP/IP协议。<a href="#refer_0"><sup>1</sup></a></p>
@@ -76,72 +41,6 @@
 <h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><div id="refer_0"></div>
 - [1] [百度百科](https://baike.baidu.com/item/TCP%2FIP协议/212915?fromtitle=tcp%2Fip&fromid=214077&fr=aladdin#reference-[1]-7649-wrap)
 ]]></content>
-  </entry>
-  <entry>
-    <title>动态规划——编辑距离</title>
-    <url>/2020/04/25/StringModify/</url>
-    <content><![CDATA[<h2 id="Leetcode-72-编辑距离"><a href="#Leetcode-72-编辑距离" class="headerlink" title="Leetcode 72. 编辑距离"></a>Leetcode 72. 编辑距离</h2><h3 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h3><p>给你两个单词 word1 和 word2，请你计算出将 word1 转换成 word2 所使用的最少操作数 。<br>你可以对一个单词进行如下三种操作：  </p>
-<ul>
-<li>插入一个字符  </li>
-<li>删除一个字符  </li>
-<li>替换一个字符  <figure class="highlight c++"><table><tr><td class="code"><pre><span class="line">输入：word1 = <span class="string">"horse"</span>, word2 = <span class="string">"ros"</span></span><br><span class="line">输出：<span class="number">3</span></span><br><span class="line">解释：</span><br><span class="line">horse -&gt; rorse (将 <span class="string">'h'</span> 替换为 <span class="string">'r'</span>)</span><br><span class="line">rorse -&gt; rose (删除 <span class="string">'r'</span>)</span><br><span class="line">rose -&gt; ros (删除 <span class="string">'e'</span>)</span><br><span class="line"></span><br><span class="line">来源：力扣（LeetCode）</span><br><span class="line">链接：https:<span class="comment">//leetcode-cn.com/problems/edit-distance</span></span><br></pre></td></tr></table></figure>
-
-</li>
-</ul>
-<h3 id="题解"><a href="#题解" class="headerlink" title="题解"></a>题解</h3><p>典型的动态规划类题目，一开始没想到动态规划解法，是因为没有其他思路，只想到了数组遍历操作（很麻烦也很复杂）。<br>后来看了答案，顿然感悟，觉得有必要把解题思路写一下，总结&amp;反思。<br>其实，动态规划算法分为两步：</p>
-<ul>
-<li>逐步逼近（寻找子问题）</li>
-<li>求解状态转换方程  </li>
-</ul>
-<p>例如：<br>word1 = “horse”<br>word2 = “ros”<br>先让word1匹配”r”, 然后逐步添加word2的长度，最后算出最少长度</p>
-<p>状态转换方程不太好直观得到，祭出数组列表大法  </p>
-<table>
-<thead>
-<tr>
-<th></th>
-<th>h</th>
-<th>o</th>
-<th>r</th>
-<th>s</th>
-<th>e</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>r</td>
-<td>1</td>
-<td>2</td>
-<td>2</td>
-<td>3</td>
-<td>4</td>
-</tr>
-<tr>
-<td>o</td>
-<td>2</td>
-<td>1</td>
-<td>2</td>
-<td>…</td>
-<td></td>
-</tr>
-<tr>
-<td>s</td>
-<td>3</td>
-<td>2</td>
-<td>…</td>
-<td></td>
-<td></td>
-</tr>
-</tbody></table>
-<p>s[i][j]：表示word1[0:i]编辑到word2[0:j]的最短距离</p>
-<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="keyword">if</span> word1[i] == word2[j]:</span><br><span class="line">    s[i][j] = s[i<span class="number">-1</span>][j<span class="number">-1</span>] <span class="comment">// 如果当前字符相等，不需要添加编辑数</span></span><br><span class="line"><span class="keyword">else</span>:</span><br><span class="line">    s[i][j] = <span class="built_in">min</span>(  </span><br><span class="line">                   <span class="number">1</span> + s[i<span class="number">-1</span>][j<span class="number">-1</span>],  <span class="comment">// 替换  </span></span><br><span class="line">                   <span class="number">1</span> + s[i][j<span class="number">-1</span>],    <span class="comment">// 删除  </span></span><br><span class="line">                   <span class="number">1</span> + s[i<span class="number">-1</span>][j],    <span class="comment">// 插入  </span></span><br><span class="line">                 )</span><br></pre></td></tr></table></figure>
-
-<p>Leetcode代码如下：</p>
-<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">minDistance</span><span class="params">(<span class="built_in">string</span> word1, <span class="built_in">string</span> word2)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (word1.<span class="built_in">size</span>() == <span class="number">0</span> || word2.<span class="built_in">size</span>() == <span class="number">0</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="built_in">max</span>(word1.<span class="built_in">size</span>(), word2.<span class="built_in">size</span>());</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">const</span> <span class="keyword">int</span> rows = word2.<span class="built_in">size</span>();</span><br><span class="line">        <span class="keyword">const</span> <span class="keyword">int</span> cols = word1.<span class="built_in">size</span>();</span><br><span class="line">        <span class="function"><span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; &gt; <span class="title">tmp</span><span class="params">(rows,<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;(cols))</span></span>;</span><br><span class="line">        <span class="comment">// 初始化第一行和第一列（特殊情况）</span></span><br><span class="line">        <span class="keyword">bool</span> flag = <span class="literal">false</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; word1.<span class="built_in">size</span>(); i++) &#123;</span><br><span class="line">            <span class="keyword">if</span> (word2[<span class="number">0</span>] == word1[i]) &#123;</span><br><span class="line">                tmp[<span class="number">0</span>][i] = i;</span><br><span class="line">                flag = <span class="literal">true</span>;</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                <span class="keyword">if</span> (flag) &#123;</span><br><span class="line">                    tmp[<span class="number">0</span>][i] = i;</span><br><span class="line">                &#125; <span class="keyword">else</span>&#123;</span><br><span class="line">                    tmp[<span class="number">0</span>][i] = i + <span class="number">1</span>;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        flag = <span class="literal">false</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; word2.<span class="built_in">size</span>(); i++) &#123;</span><br><span class="line">            <span class="keyword">if</span> (word1[<span class="number">0</span>] == word2[i]) &#123;</span><br><span class="line">                tmp[i][<span class="number">0</span>] = i;</span><br><span class="line">                flag = <span class="literal">true</span>;</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                <span class="keyword">if</span> (flag) &#123;</span><br><span class="line">                    tmp[i][<span class="number">0</span>] = i;</span><br><span class="line">                &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                    tmp[i][<span class="number">0</span>] = i + <span class="number">1</span>;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 根据状态转换方程写出循环</span></span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt; word2.<span class="built_in">size</span>(); i++) &#123;</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">1</span>; j &lt; word1.<span class="built_in">size</span>(); j++) &#123;</span><br><span class="line">                <span class="keyword">if</span> (word2[i] == word1[j]) &#123;</span><br><span class="line">                    tmp[i][j] = tmp[i<span class="number">-1</span>][j<span class="number">-1</span>];</span><br><span class="line">                &#125; <span class="keyword">else</span> &#123;    </span><br><span class="line">                    tmp[i][j] = <span class="built_in">min</span>(<span class="number">1</span> + tmp[i<span class="number">-1</span>][j<span class="number">-1</span>],</span><br><span class="line">                                    <span class="built_in">min</span>(<span class="number">1</span> + tmp[i][j<span class="number">-1</span>], <span class="number">1</span> + tmp[i<span class="number">-1</span>][j]));</span><br><span class="line">                &#125;</span><br><span class="line">                </span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> tmp[word2.<span class="built_in">size</span>()<span class="number">-1</span>][word1.<span class="built_in">size</span>()<span class="number">-1</span>];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>]]></content>
-      <categories>
-        <category>学习总结</category>
-      </categories>
-      <tags>
-        <tag>算法</tag>
-      </tags>
   </entry>
   <entry>
     <title>Hello World</title>
@@ -228,6 +127,107 @@
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">X&amp;&amp; foo ()</span><br><span class="line">&#123;</span><br><span class="line">    X x;</span><br><span class="line">    ...</span><br><span class="line">    return x; &#x2F;&#x2F; ERROR: returns reference to nonexisting object</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p>具名的右值引用被当作左值<br>如果没有显式写出移动构造函数，默认调用拷贝构造函数，没有默认移动构造函数之说。</p>
+]]></content>
+      <categories>
+        <category>学习总结</category>
+      </categories>
+      <tags>
+        <tag>C++</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Forward &amp; 完美转发</title>
+    <url>/2020/05/23/Forward%20&amp;%20%E5%AE%8C%E7%BE%8E%E8%BD%AC%E5%8F%91/</url>
+    <content><![CDATA[<h2 id="Forward"><a href="#Forward" class="headerlink" title="Forward"></a>Forward</h2><p>由来：C++规定函数参数都是左值（引用），那么模板函数中的参数，不管实参是左值（引用）还是右值（引用），形参都是左值（引用）。</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">test</span><span class="params">(<span class="keyword">int</span>&amp; a)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="string">"call &amp; test"</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">test</span><span class="params">(<span class="keyword">int</span>&amp;&amp; a)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="string">"call &amp;&amp; test"</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">func</span><span class="params">(T&amp;&amp; a)</span> </span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    test(a);</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> a = <span class="number">10</span>;</span><br><span class="line">    func(a);</span><br><span class="line">    func(<span class="number">10</span>);</span><br><span class="line">    <span class="keyword">int</span> &amp;b = a;</span><br><span class="line">    func(b);</span><br><span class="line">    func(<span class="built_in">move</span>(b));</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>输出如下：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">call &amp; test</span><br><span class="line">call &amp; test</span><br><span class="line">call &amp; test</span><br><span class="line">call &amp; test</span><br></pre></td></tr></table></figure>
+<p>都是调用的左值引用参数的test函数</p>
+<h2 id="完美转发"><a href="#完美转发" class="headerlink" title="完美转发"></a>完美转发</h2><p>forward就是为了解决这个问题的，即把参数的引用类别（左值引用/右值引用）完美地传达给下一级函数。<br>修改上面模板函数，如下：</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">func</span><span class="params">(T&amp;&amp; a)</span> </span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    test(forward&lt;T&gt;(a));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>输出结果如下：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">call &amp; test</span><br><span class="line">call &amp;&amp; test</span><br><span class="line">call &amp; test</span><br><span class="line">call &amp;&amp; test</span><br></pre></td></tr></table></figure>]]></content>
+  </entry>
+  <entry>
+    <title>动态规划——编辑距离</title>
+    <url>/2020/04/25/Leetcode%2072.%20%E7%BC%96%E8%BE%91%E8%B7%9D%E7%A6%BB/</url>
+    <content><![CDATA[<h2 id="Leetcode-72-编辑距离"><a href="#Leetcode-72-编辑距离" class="headerlink" title="Leetcode 72. 编辑距离"></a>Leetcode 72. 编辑距离</h2><h3 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h3><p>给你两个单词 word1 和 word2，请你计算出将 word1 转换成 word2 所使用的最少操作数 。<br>你可以对一个单词进行如下三种操作：  </p>
+<ul>
+<li>插入一个字符  </li>
+<li>删除一个字符  </li>
+<li>替换一个字符  <figure class="highlight c++"><table><tr><td class="code"><pre><span class="line">输入：word1 = <span class="string">"horse"</span>, word2 = <span class="string">"ros"</span></span><br><span class="line">输出：<span class="number">3</span></span><br><span class="line">解释：</span><br><span class="line">horse -&gt; rorse (将 <span class="string">'h'</span> 替换为 <span class="string">'r'</span>)</span><br><span class="line">rorse -&gt; rose (删除 <span class="string">'r'</span>)</span><br><span class="line">rose -&gt; ros (删除 <span class="string">'e'</span>)</span><br><span class="line"></span><br><span class="line">来源：力扣（LeetCode）</span><br><span class="line">链接：https:<span class="comment">//leetcode-cn.com/problems/edit-distance</span></span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h3 id="题解"><a href="#题解" class="headerlink" title="题解"></a>题解</h3><p>典型的动态规划类题目，一开始没想到动态规划解法，是因为没有其他思路，只想到了数组遍历操作（很麻烦也很复杂）。<br>后来看了答案，顿然感悟，觉得有必要把解题思路写一下，总结&amp;反思。<br>其实，动态规划算法分为两步：</p>
+<ul>
+<li>逐步逼近（寻找子问题）</li>
+<li>求解状态转换方程  </li>
+</ul>
+<p>例如：<br>word1 = “horse”<br>word2 = “ros”<br>先让word1匹配”r”, 然后逐步添加word2的长度，最后算出最少长度</p>
+<p>状态转换方程不太好直观得到，祭出数组列表大法  </p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>h</th>
+<th>o</th>
+<th>r</th>
+<th>s</th>
+<th>e</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>r</td>
+<td>1</td>
+<td>2</td>
+<td>2</td>
+<td>3</td>
+<td>4</td>
+</tr>
+<tr>
+<td>o</td>
+<td>2</td>
+<td>1</td>
+<td>2</td>
+<td>…</td>
+<td></td>
+</tr>
+<tr>
+<td>s</td>
+<td>3</td>
+<td>2</td>
+<td>…</td>
+<td></td>
+<td></td>
+</tr>
+</tbody></table>
+<p>s[i][j]：表示word1[0:i]编辑到word2[0:j]的最短距离</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="keyword">if</span> word1[i] == word2[j]:</span><br><span class="line">    s[i][j] = s[i<span class="number">-1</span>][j<span class="number">-1</span>] <span class="comment">// 如果当前字符相等，不需要添加编辑数</span></span><br><span class="line"><span class="keyword">else</span>:</span><br><span class="line">    s[i][j] = <span class="built_in">min</span>(  </span><br><span class="line">                   <span class="number">1</span> + s[i<span class="number">-1</span>][j<span class="number">-1</span>],  <span class="comment">// 替换  </span></span><br><span class="line">                   <span class="number">1</span> + s[i][j<span class="number">-1</span>],    <span class="comment">// 删除  </span></span><br><span class="line">                   <span class="number">1</span> + s[i<span class="number">-1</span>][j],    <span class="comment">// 插入  </span></span><br><span class="line">                 )</span><br></pre></td></tr></table></figure>
+
+<p>Leetcode代码如下：</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">minDistance</span><span class="params">(<span class="built_in">string</span> word1, <span class="built_in">string</span> word2)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (word1.<span class="built_in">size</span>() == <span class="number">0</span> || word2.<span class="built_in">size</span>() == <span class="number">0</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="built_in">max</span>(word1.<span class="built_in">size</span>(), word2.<span class="built_in">size</span>());</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">const</span> <span class="keyword">int</span> rows = word2.<span class="built_in">size</span>();</span><br><span class="line">        <span class="keyword">const</span> <span class="keyword">int</span> cols = word1.<span class="built_in">size</span>();</span><br><span class="line">        <span class="function"><span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; &gt; <span class="title">tmp</span><span class="params">(rows,<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;(cols))</span></span>;</span><br><span class="line">        <span class="comment">// 初始化第一行和第一列（特殊情况）</span></span><br><span class="line">        <span class="keyword">bool</span> flag = <span class="literal">false</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; word1.<span class="built_in">size</span>(); i++) &#123;</span><br><span class="line">            <span class="keyword">if</span> (word2[<span class="number">0</span>] == word1[i]) &#123;</span><br><span class="line">                tmp[<span class="number">0</span>][i] = i;</span><br><span class="line">                flag = <span class="literal">true</span>;</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                <span class="keyword">if</span> (flag) &#123;</span><br><span class="line">                    tmp[<span class="number">0</span>][i] = i;</span><br><span class="line">                &#125; <span class="keyword">else</span>&#123;</span><br><span class="line">                    tmp[<span class="number">0</span>][i] = i + <span class="number">1</span>;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        flag = <span class="literal">false</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; word2.<span class="built_in">size</span>(); i++) &#123;</span><br><span class="line">            <span class="keyword">if</span> (word1[<span class="number">0</span>] == word2[i]) &#123;</span><br><span class="line">                tmp[i][<span class="number">0</span>] = i;</span><br><span class="line">                flag = <span class="literal">true</span>;</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                <span class="keyword">if</span> (flag) &#123;</span><br><span class="line">                    tmp[i][<span class="number">0</span>] = i;</span><br><span class="line">                &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                    tmp[i][<span class="number">0</span>] = i + <span class="number">1</span>;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 根据状态转换方程写出循环</span></span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt; word2.<span class="built_in">size</span>(); i++) &#123;</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">1</span>; j &lt; word1.<span class="built_in">size</span>(); j++) &#123;</span><br><span class="line">                <span class="keyword">if</span> (word2[i] == word1[j]) &#123;</span><br><span class="line">                    tmp[i][j] = tmp[i<span class="number">-1</span>][j<span class="number">-1</span>];</span><br><span class="line">                &#125; <span class="keyword">else</span> &#123;    </span><br><span class="line">                    tmp[i][j] = <span class="built_in">min</span>(<span class="number">1</span> + tmp[i<span class="number">-1</span>][j<span class="number">-1</span>],</span><br><span class="line">                                    <span class="built_in">min</span>(<span class="number">1</span> + tmp[i][j<span class="number">-1</span>], <span class="number">1</span> + tmp[i<span class="number">-1</span>][j]));</span><br><span class="line">                &#125;</span><br><span class="line">                </span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> tmp[word2.<span class="built_in">size</span>()<span class="number">-1</span>][word1.<span class="built_in">size</span>()<span class="number">-1</span>];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>]]></content>
+      <categories>
+        <category>学习总结</category>
+      </categories>
+      <tags>
+        <tag>算法</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>智能指针</title>
+    <url>/2020/04/12/%E6%99%BA%E8%83%BD%E6%8C%87%E9%92%88/</url>
+    <content><![CDATA[<h2 id="智能指针"><a href="#智能指针" class="headerlink" title="智能指针"></a>智能指针</h2><p>头文件 <code>#include &lt;memory&gt;</code>  </p>
+<h3 id="unique-ptr"><a href="#unique-ptr" class="headerlink" title="unique_ptr"></a>unique_ptr</h3><p>独占指针对象，引用计数为1，无拷贝构造函数,无赋值方法，可以通过move转移所有权。  </p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="function"><span class="built_in">unique_ptr</span>&lt;<span class="keyword">int</span>&gt; <span class="title">ptr0</span><span class="params">(<span class="keyword">new</span> <span class="keyword">int</span>(<span class="number">10</span>))</span></span>;</span><br><span class="line">    <span class="comment">//unique_ptr&lt;int&gt; ptr1 = ptr0;  // 独占指针对象，无拷贝构造函数，编译出错</span></span><br><span class="line"></span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; *ptr0 &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    <span class="built_in">unique_ptr</span>&lt;<span class="keyword">int</span>&gt; ptr2 = <span class="built_in">move</span>(ptr0);  <span class="comment">// 可以通过move函数转移所有权，原ptr0失效</span></span><br><span class="line">    </span><br><span class="line">    <span class="keyword">if</span> (<span class="literal">nullptr</span> == ptr0) &#123;</span><br><span class="line">        <span class="built_in">cout</span> &lt;&lt; <span class="string">"ptr0 set to nullptr."</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; *ptr2 &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="shared-ptr"><a href="#shared-ptr" class="headerlink" title="shared_ptr"></a>shared_ptr</h3><p>共享指针对象，可以赋值给shared_ptr或weak_ptr，强引用，决定指针对象的生命周期</p>
+<h3 id="weak-ptr"><a href="#weak-ptr" class="headerlink" title="weak_ptr"></a>weak_ptr</h3><p>弱指针引用，只引用，不计数，不能决定对象的生命周期；使用前需lock判断是否有效</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="function"><span class="built_in">shared_ptr</span>&lt;<span class="keyword">int</span>&gt; <span class="title">ptr0</span><span class="params">(<span class="keyword">new</span> <span class="keyword">int</span>(<span class="number">10</span>))</span></span>;</span><br><span class="line">    <span class="function"><span class="built_in">shared_ptr</span>&lt;<span class="keyword">int</span>&gt; <span class="title">ptr1</span><span class="params">(ptr0)</span></span>;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; ptr0.use_count() &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line"></span><br><span class="line">    weak_ptr&lt;<span class="keyword">int</span>&gt; ptr2 = ptr0;</span><br><span class="line">    ptr0.reset();   <span class="comment">// 释放指针，引用计数减 1</span></span><br><span class="line">    ptr1.reset();</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (ptr2.expired()) &#123;   <span class="comment">// 引用计数为空时，expired 返回true，否则返回false</span></span><br><span class="line">        <span class="built_in">cout</span> &lt;&lt; <span class="string">"ptr2.lock return nullptr."</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="built_in">cout</span> &lt;&lt; *ptr2.lock() &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="make-shared"><a href="#make-shared" class="headerlink" title="make_shared"></a>make_shared</h3><p>shared_ptr + new 函数分为控制块（引用计数）和数据块（真实申请空间），两块内存空间两次分配，效率较低</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="built_in">shared_ptr</span>&lt;<span class="keyword">int</span>&gt; <span class="title">ptr0</span><span class="params">(<span class="keyword">new</span> <span class="keyword">int</span>(<span class="number">10</span>))</span></span>;</span><br><span class="line"><span class="built_in">shared_ptr</span>&lt;<span class="keyword">int</span>&gt; ptr3 = make_shared&lt;<span class="keyword">int</span>&gt;(<span class="number">10</span>);</span><br></pre></td></tr></table></figure>
+<p>而make_shared可以把两块内存整合到一起，只需进行一次内存分配，效率较高，但是引入一个问题：<br>origin: 强引用（shared_ptr）计数为0时，即可释放数据块内存，弱引用（weak_ptr）计数为0时，释放控制块<br>now: 强引用和弱引用同时为0，才可以释放内存块，因为控制块和数据块裹绑到一起了。</p>
 ]]></content>
       <categories>
         <category>学习总结</category>
