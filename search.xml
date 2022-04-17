@@ -1,154 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>TCP/IP协议簇</title>
-    <url>/2020/06/26/TCP-IP%E5%8D%8F%E8%AE%AE%E7%B0%87/</url>
-    <content><![CDATA[<p>TCP/IP（Transmission Control Protocol/Internet Protocol，传输控制协议/网际协议）是指能够在多个不同网络间实现信息传输的协议簇。TCP/IP协议不仅仅指的是TCP 和IP两个协议，而是指一个由FTP、SMTP、TCP、UDP、IP等协议构成的协议簇， 只是因为在TCP/IP协议中TCP协议和IP协议最具代表性，所以被称为TCP/IP协议。<a href="#refer_0"><sup>1</sup></a></p>
-<p>tcp/ip分为四层模型，</p>
-<table>
-<thead>
-<tr>
-<th>Level</th>
-<th>Description</th>
-<th>Represent Protocal</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>应用层</td>
-<td>根据需求选择协议</td>
-<td>email(SMTP), web(http)</td>
-</tr>
-<tr>
-<td>传输层</td>
-<td>数据包传输</td>
-<td>TCP UDP</td>
-</tr>
-<tr>
-<td>网络层</td>
-<td>建立网络连接与ip寻址</td>
-<td>IP</td>
-</tr>
-<tr>
-<td>链路层</td>
-<td>传输的物理媒介</td>
-<td>网络接口与硬件…</td>
-</tr>
-</tbody></table>
-<h2 id="TCP为什么需要三次握手"><a href="#TCP为什么需要三次握手" class="headerlink" title="TCP为什么需要三次握手"></a>TCP为什么需要三次握手</h2><p>三次握手流程图：<br><img src="https://i.loli.net/2020/06/26/nOBdjPLRGzyu9bU.jpg" alt="avatar"><br>第一次握手：客户端发送标记位（SYN=1, ACK=0），seq=x（随机）的数据包给服务器<br>第二次握手：服务端接收到了包，给客户端回传标记位（SYN=1, ACK=1），seq=y，ack=x+1的数据包<br>第三次握手：客户端再发送标记位（ACK=1)，seq=x+1，ack=y+1，数据包确认连接</p>
-<h3 id="为啥需要三次握手"><a href="#为啥需要三次握手" class="headerlink" title="为啥需要三次握手"></a>为啥需要三次握手</h3><p>三次握手是确认双方可靠传输的最少握手次数，即双方都有正常收发功能。<br>第一次握手：客户端正常发<br>第二次握手：服务端正常收，发<br>第三次握手：客户端正常收（发）</p>
-<h2 id="IP-DNS"><a href="#IP-DNS" class="headerlink" title="IP DNS"></a>IP DNS</h2><p>IP：利用ip地址与MAC地址进行网络层的数据寻址与传输<br>DNS：ip地址不符合人的记忆习惯，DNS提供域名到ip的相互转换功能。（处于应用层）</p>
-<h3 id="四次挥手"><a href="#四次挥手" class="headerlink" title="四次挥手"></a>四次挥手</h3><p>第一次挥手：客户端发送（FIN=1，序号seq=u），并且停止再发送数据，等待服务端应答；<br>第二次挥手：服务端收到后即发送（ACK=1，ack=u+1，序号seq=v）<br>第三次挥手：服务端数据传输完成后，再发送（ACK=1，ack=u+1，序号seq=w）；<br>第四次挥手：客户端收到后，再发送确认报文段（ACK=1，ack=w+1，序号seq=u+1），时间计数超过后自动释放。</p>
-<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><div id="refer_0"></div>
-- [1] [百度百科](https://baike.baidu.com/item/TCP%2FIP协议/212915?fromtitle=tcp%2Fip&fromid=214077&fr=aladdin#reference-[1]-7649-wrap)
-]]></content>
-  </entry>
-  <entry>
-    <title>Hello World</title>
-    <url>/2020/04/05/hello-world/</url>
-    <content><![CDATA[<p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/one-command-deployment.html" target="_blank" rel="noopener">Deployment</a></p>
-]]></content>
-  </entry>
-  <entry>
-    <title>拷贝构造函数</title>
-    <url>/2020/05/08/%E6%8B%B7%E8%B4%9D%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0%E4%B8%8E%E7%A7%BB%E5%8A%A8%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0/</url>
-    <content><![CDATA[<h2 id="初始化与赋值"><a href="#初始化与赋值" class="headerlink" title="初始化与赋值"></a>初始化与赋值</h2><p>声明对象时同时赋值 -&gt; 初始化，初始化只有一次<br>声明对象后，再赋值 -&gt; （=）赋值，赋值可以多次  </p>
-<ul>
-<li>初始化调用的是拷贝构造函数（构造函数就是用来初始化对象的）</li>
-<li>赋值调用的是重载 = 运算符（两个对象都已存在并完成初始化）</li>
-</ul>
-<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">A</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    A() &#123;</span><br><span class="line">        <span class="built_in">cout</span> &lt;&lt; <span class="string">"A class -&gt; Default Constructor"</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    A(<span class="keyword">const</span> <span class="keyword">int</span>&amp; val) &#123;</span><br><span class="line">        <span class="built_in">cout</span> &lt;&lt; <span class="string">"A class -&gt; Parameter Constructor"</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    A(<span class="keyword">const</span> A&amp; tmp) &#123;   <span class="comment">// 拷贝构造函数</span></span><br><span class="line">        <span class="built_in">cout</span> &lt;&lt; <span class="string">"A class -&gt; CopyConstructor"</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    A&amp; <span class="keyword">operator</span>=(<span class="keyword">const</span> A&amp; tmp) &#123;    <span class="comment">// 重载运算符=</span></span><br><span class="line">        <span class="keyword">if</span> (<span class="keyword">this</span> != &amp;tmp) &#123;</span><br><span class="line">            <span class="comment">// pass</span></span><br><span class="line">        &#125;</span><br><span class="line">        <span class="built_in">cout</span> &lt;&lt; <span class="string">"A class -&gt; = operator"</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">        <span class="keyword">return</span> *<span class="keyword">this</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    ~A() &#123;</span><br><span class="line">        <span class="built_in">cout</span> &lt;&lt; <span class="string">"A class -&gt; DeConstructor"</span> &lt;&lt; <span class="built_in">endl</span>; </span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="function">A <span class="title">obja</span><span class="params">(<span class="number">5</span>)</span></span>;    </span><br><span class="line">    <span class="function">A <span class="title">objb</span><span class="params">(obja)</span></span>;   <span class="comment">// 初始化，调用拷贝构造函数</span></span><br><span class="line">    A objb = obja;  <span class="comment">// 初始化，调用拷贝构造函数</span></span><br><span class="line">    A objc;</span><br><span class="line">    objc = obja;    <span class="comment">// 赋值，调用重载运算符操作</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h2 id="拷贝构造函数"><a href="#拷贝构造函数" class="headerlink" title="拷贝构造函数"></a>拷贝构造函数</h2><p>以下三种情况都会调用拷贝构造函数：</p>
-<ul>
-<li>一个对象以值传递的方式传入函数体（参数） </li>
-<li>一个对象以值传递的方式从函数返回 </li>
-<li>一个对象需要通过另外一个对象进行初始化</li>
-</ul>
-<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="function">A <span class="title">GetObject</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    A tmpa;</span><br><span class="line">    <span class="keyword">return</span> tmpa;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">main:</span><br><span class="line">A obja = GetObject();</span><br></pre></td></tr></table></figure>
-<p>上面这段代码调用了3次构造函数，3次析构函数<br><img src="initialize/result_0.png" alt="avatar"></p>
-<ol>
-<li>GetObject().tmpa 调用默认构造函数</li>
-<li>GetObject().tmpa -&gt; 返回值X，调用拷贝构造函数</li>
-<li>GetObject().tmpa 调用析构函数</li>
-<li>返回值X -&gt; obja，调用拷贝构造函数</li>
-<li>返回值X 调用析构函数</li>
-<li>obja 调用析构函数</li>
-</ol>
-<p>P.S. 需要加上“-fno-elide-constructors”选项，不然gcc编译器会对返回值进行优化，即RVO（return value optimazation）。</p>
-<h2 id="移动构造函数"><a href="#移动构造函数" class="headerlink" title="移动构造函数"></a>移动构造函数</h2><p>浅拷贝：对象属性值的拷贝，如果对象含有指针，则两对象指针值一样，指向空间也一样，后面析构时（释放指针空间）导致重复释放。<br>深拷贝：针对浅拷贝指针问题，显式实现拷贝构造函数，在函数内部重新申请一块空间。两对象指针指向空间独立。</p>
-<p>然而深拷贝就引入效率问题，如果对象拷贝完成后就不再使用了，那么反复申请释放内存空间开销就比较大了。其实这可以通过特殊“浅拷贝”——移动构造函数来实现。</p>
-<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">A</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    A(<span class="keyword">int</span> val) &#123;</span><br><span class="line">        len = val;</span><br><span class="line">        data = <span class="keyword">new</span> <span class="keyword">int</span>[len];</span><br><span class="line">        <span class="built_in">cout</span> &lt;&lt; <span class="string">"A class -&gt; Parameter Constructor"</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    A(<span class="keyword">const</span> A&amp; tmp) &#123;</span><br><span class="line">        len = tmp.len;</span><br><span class="line">        data = <span class="keyword">new</span> <span class="keyword">int</span>[len];</span><br><span class="line">        <span class="built_in">cout</span> &lt;&lt; <span class="string">"A class -&gt; CopyConstructor"</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    A(A&amp;&amp; tmp) &#123;</span><br><span class="line">        len = tmp.len;</span><br><span class="line">        data = tmp.data;</span><br><span class="line">        tmp.data = <span class="literal">nullptr</span>;</span><br><span class="line">        <span class="built_in">cout</span> &lt;&lt; <span class="string">"A class -&gt; MoveConstructor"</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    ~A() &#123;</span><br><span class="line">        <span class="keyword">delete</span>[] data;</span><br><span class="line">        <span class="built_in">cout</span> &lt;&lt; <span class="string">"A class -&gt; DeConstructor"</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">int</span>* <span class="title">GetDataAddress</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> data;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    <span class="keyword">int</span> *data;</span><br><span class="line">    <span class="keyword">int</span> len;</span><br><span class="line">    <span class="built_in">string</span> name;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="function">A <span class="title">tmpa</span><span class="params">(<span class="number">10</span>)</span></span>;</span><br><span class="line">    <span class="function">A <span class="title">tmpb</span><span class="params">(<span class="built_in">move</span>(tmpa))</span></span>;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; tmpa.GetDataAddress() &lt;&lt; <span class="built_in">endl</span>;  <span class="comment">// 有点违规，理论上move调用后，不应该再使用tmpa</span></span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; tmpb.GetDataAddress() &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>]]></content>
-      <categories>
-        <category>学习总结</category>
-      </categories>
-      <tags>
-        <tag>C++</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>摩尔投票算法</title>
-    <url>/2020/05/04/%E6%91%A9%E5%B0%94%E6%8A%95%E7%A5%A8%E7%AE%97%E6%B3%95/</url>
-    <content><![CDATA[<h2 id="摩尔投票算法"><a href="#摩尔投票算法" class="headerlink" title="摩尔投票算法"></a>摩尔投票算法</h2><p>摩尔投票算法是一种使用线性时间和常数空间查找大部分元素序列的算法。</p>
-<h3 id="leetcode-169"><a href="#leetcode-169" class="headerlink" title="leetcode 169"></a>leetcode 169</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">给定一个大小为 n 的数组，找到其中的多数元素。多数元素是指在数组中出现次数大于 ⌊ n&#x2F;2 ⌋ 的元素。</span><br><span class="line">你可以假设数组是非空的，并且给定的数组总是存在多数元素。</span><br><span class="line"></span><br><span class="line">来源链接：https:&#x2F;&#x2F;leetcode-cn.com&#x2F;problems&#x2F;majority-element</span><br></pre></td></tr></table></figure>
-<h4 id="解题思路："><a href="#解题思路：" class="headerlink" title="解题思路："></a>解题思路：</h4><p>显然，出现次数大于 n/2 的元素只有1个；<br>这题用排序，计数法当然也可以计算出来，时间复杂度O(nlogn)，却不是最优的。摩尔投票法可以达到O(n)时间复杂度和O(1)的空间复杂度。<br>通俗来讲，摩尔投票法就是对拼法（“同归于尽”法），从数组中选择两个不同的数，删掉它们，遍历完数组，那么剩余的数就是多数元素。</p>
-<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">majorityElement</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; nums)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> num = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">int</span> cnt = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">auto</span> one : nums) &#123;</span><br><span class="line">            <span class="keyword">if</span> (one == num) &#123;</span><br><span class="line">                cnt += <span class="number">1</span>;</span><br><span class="line">            &#125; <span class="keyword">else</span> <span class="keyword">if</span> (cnt == <span class="number">0</span>) &#123;</span><br><span class="line">                num = one;</span><br><span class="line">                cnt = <span class="number">1</span>;</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                cnt -= <span class="number">1</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> num;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-<h3 id="leetcode-229"><a href="#leetcode-229" class="headerlink" title="leetcode 229"></a>leetcode 229</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">给定一个大小为 n 的数组，找出其中所有出现超过 ⌊ n&#x2F;3 ⌋ 次的元素。</span><br><span class="line">说明: 要求算法的时间复杂度为 O(n)，空间复杂度为 O(1)。</span><br><span class="line">来源链接：https:&#x2F;&#x2F;leetcode-cn.com&#x2F;problems&#x2F;majority-element-ii&#x2F;</span><br></pre></td></tr></table></figure>
-<h4 id="解题思路"><a href="#解题思路" class="headerlink" title="解题思路"></a>解题思路</h4><p>类似地，先求出该数组可能解的个数，显然，出现次数超过 n/3 的元素最多2个，最少1个（有解的情况下）。  </p>
-<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; <span class="title">majorityElement</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; nums)</span> </span>&#123;</span><br><span class="line">        <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; res;</span><br><span class="line">        <span class="keyword">int</span> num0 = <span class="number">0</span>, num1 = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">int</span> cnt0 = <span class="number">0</span>, cnt1 = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">auto</span> one : nums) &#123;</span><br><span class="line">            <span class="keyword">if</span> (one == num0) &#123;</span><br><span class="line">                cnt0 += <span class="number">1</span>;</span><br><span class="line">            &#125; <span class="keyword">else</span> <span class="keyword">if</span> (one == num1) &#123;</span><br><span class="line">                cnt1 += <span class="number">1</span>;</span><br><span class="line">            &#125; <span class="keyword">else</span> <span class="keyword">if</span> (cnt0 == <span class="number">0</span>) &#123;</span><br><span class="line">                num0 = one;</span><br><span class="line">                cnt0 = <span class="number">1</span>;</span><br><span class="line">            &#125; <span class="keyword">else</span> <span class="keyword">if</span> (cnt1 == <span class="number">0</span>) &#123;</span><br><span class="line">                num1 = one;</span><br><span class="line">                cnt1 = <span class="number">1</span>;</span><br><span class="line">            &#125; </span><br><span class="line">            <span class="keyword">else</span> &#123;</span><br><span class="line">                cnt0 -= <span class="number">1</span>;</span><br><span class="line">                cnt1 -= <span class="number">1</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        cnt0 = cnt1 = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">auto</span> one : nums) &#123;</span><br><span class="line">            <span class="keyword">if</span> (one == num0) &#123;</span><br><span class="line">                cnt0 += <span class="number">1</span>;</span><br><span class="line">            &#125; <span class="keyword">else</span> <span class="keyword">if</span> (one == num1) &#123;</span><br><span class="line">                cnt1 += <span class="number">1</span>;</span><br><span class="line">            &#125; </span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (cnt0 &gt; nums.<span class="built_in">size</span>() / <span class="number">3</span>) &#123;</span><br><span class="line">            res.push_back(num0);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (cnt1 &gt; nums.<span class="built_in">size</span>() / <span class="number">3</span>) &#123;</span><br><span class="line">            res.push_back(num1);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> res;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-]]></content>
-      <categories>
-        <category>学习总结</category>
-      </categories>
-      <tags>
-        <tag>算法</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>左值与右值</title>
-    <url>/2020/05/08/%E5%B7%A6%E5%80%BC%E4%B8%8E%E5%8F%B3%E5%80%BC/</url>
-    <content><![CDATA[<h2 id="左值与右值"><a href="#左值与右值" class="headerlink" title="左值与右值"></a>左值与右值</h2><p>通俗地说。以赋值符号 = 为界，= 左边的就是左值，= 右边就是右值。 int a = b; a就是左值，b作为右值赋值给a（b的右值赋值给a）。左值右值概念是相对而言的。<br>其中左值也分为可赋值左值和不可赋值左值（const）。<br>其实更深层次可以理解为，L-value中的L指的是Location，表示可寻址。Avalue (computer science)that has an address.<br>R-value中的R指的是Read，表示可读。in computer science, a value that does not have an address in a computer language.</p>
-<h2 id="左值引用与右值引用"><a href="#左值引用与右值引用" class="headerlink" title="左值引用与右值引用"></a>左值引用与右值引用</h2><h3 id="来源"><a href="#来源" class="headerlink" title="来源"></a>来源</h3><p>C++11之前的引用都是左值引用，C++11引入了右值引用，是为了避免（节省）临时变量申请释放造成的开销。</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">作为一种追求执行效率的语言，C++在用临时对象或函数返回值给左值对象赋值时的深度拷贝（deep copy）一直受到诟病。考虑到临时对象的生命期仅在表达式中持续，如果把临时对象的内容直接移动（move）给被赋值的左值对象，效率改善将是显著的。这就是移动语义的来源。 </span><br><span class="line">右值引用就是为了实现移动语义与完美转发所需要而设计出来的新的数据类型。</span><br><span class="line">——https:&#x2F;&#x2F;wiki.hk.xileso.top&#x2F;wiki&#x2F;右值引用</span><br></pre></td></tr></table></figure>
-
-<p>move函数可以（无条件）把一个左值转换成右值引用。</p>
-<h2 id="异常案例"><a href="#异常案例" class="headerlink" title="异常案例"></a>异常案例</h2><p>Note also that returning an rvalue reference is an error if the returned object is a local nonstatic object:</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">X&amp;&amp; foo ()</span><br><span class="line">&#123;</span><br><span class="line">    X x;</span><br><span class="line">    ...</span><br><span class="line">    return x; &#x2F;&#x2F; ERROR: returns reference to nonexisting object</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>具名的右值引用被当作左值<br>如果没有显式写出移动构造函数，默认调用拷贝构造函数，没有默认移动构造函数之说。</p>
-]]></content>
-      <categories>
-        <category>学习总结</category>
-      </categories>
-      <tags>
-        <tag>C++</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Forward &amp; 完美转发</title>
-    <url>/2020/05/23/Forward%20&amp;%20%E5%AE%8C%E7%BE%8E%E8%BD%AC%E5%8F%91/</url>
-    <content><![CDATA[<h2 id="Forward"><a href="#Forward" class="headerlink" title="Forward"></a>Forward</h2><p>由来：C++规定函数参数都是左值（引用），那么模板函数中的参数，不管实参是左值（引用）还是右值（引用），形参都是左值（引用）。</p>
-<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">test</span><span class="params">(<span class="keyword">int</span>&amp; a)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="string">"call &amp; test"</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">test</span><span class="params">(<span class="keyword">int</span>&amp;&amp; a)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="string">"call &amp;&amp; test"</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">func</span><span class="params">(T&amp;&amp; a)</span> </span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    test(a);</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> a = <span class="number">10</span>;</span><br><span class="line">    func(a);</span><br><span class="line">    func(<span class="number">10</span>);</span><br><span class="line">    <span class="keyword">int</span> &amp;b = a;</span><br><span class="line">    func(b);</span><br><span class="line">    func(<span class="built_in">move</span>(b));</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>输出如下：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">call &amp; test</span><br><span class="line">call &amp; test</span><br><span class="line">call &amp; test</span><br><span class="line">call &amp; test</span><br></pre></td></tr></table></figure>
-<p>都是调用的左值引用参数的test函数</p>
-<h2 id="完美转发"><a href="#完美转发" class="headerlink" title="完美转发"></a>完美转发</h2><p>forward就是为了解决这个问题的，即把参数的引用类别（左值引用/右值引用）完美地传达给下一级函数。<br>修改上面模板函数，如下：</p>
-<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">func</span><span class="params">(T&amp;&amp; a)</span> </span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    test(forward&lt;T&gt;(a));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>输出结果如下：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">call &amp; test</span><br><span class="line">call &amp;&amp; test</span><br><span class="line">call &amp; test</span><br><span class="line">call &amp;&amp; test</span><br></pre></td></tr></table></figure>]]></content>
-  </entry>
-  <entry>
     <title>动态规划——编辑距离</title>
     <url>/2020/04/25/Leetcode%2072.%20%E7%BC%96%E8%BE%91%E8%B7%9D%E7%A6%BB/</url>
     <content><![CDATA[<h2 id="Leetcode-72-编辑距离"><a href="#Leetcode-72-编辑距离" class="headerlink" title="Leetcode 72. 编辑距离"></a>Leetcode 72. 编辑距离</h2><h3 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h3><p>给你两个单词 word1 和 word2，请你计算出将 word1 转换成 word2 所使用的最少操作数 。<br>你可以对一个单词进行如下三种操作：  </p>
@@ -215,6 +67,118 @@
       </tags>
   </entry>
   <entry>
+    <title>TCP/IP协议簇</title>
+    <url>/2020/06/26/TCP-IP%E5%8D%8F%E8%AE%AE%E7%B0%87/</url>
+    <content><![CDATA[<p>TCP/IP（Transmission Control Protocol/Internet Protocol，传输控制协议/网际协议）是指能够在多个不同网络间实现信息传输的协议簇。TCP/IP协议不仅仅指的是TCP 和IP两个协议，而是指一个由FTP、SMTP、TCP、UDP、IP等协议构成的协议簇， 只是因为在TCP/IP协议中TCP协议和IP协议最具代表性，所以被称为TCP/IP协议。<a href="#refer_0"><sup>1</sup></a></p>
+<p>tcp/ip分为四层模型，</p>
+<table>
+<thead>
+<tr>
+<th>Level</th>
+<th>Description</th>
+<th>Represent Protocal</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>应用层</td>
+<td>根据需求选择协议</td>
+<td>email(SMTP), web(http)</td>
+</tr>
+<tr>
+<td>传输层</td>
+<td>数据包传输</td>
+<td>TCP UDP</td>
+</tr>
+<tr>
+<td>网络层</td>
+<td>建立网络连接与ip寻址</td>
+<td>IP</td>
+</tr>
+<tr>
+<td>链路层</td>
+<td>传输的物理媒介</td>
+<td>网络接口与硬件…</td>
+</tr>
+</tbody></table>
+<h2 id="TCP为什么需要三次握手"><a href="#TCP为什么需要三次握手" class="headerlink" title="TCP为什么需要三次握手"></a>TCP为什么需要三次握手</h2><p>三次握手流程图：<br><img src="https://i.loli.net/2020/06/26/nOBdjPLRGzyu9bU.jpg" alt="avatar"><br>第一次握手：客户端发送标记位（SYN=1, ACK=0），seq=x（随机）的数据包给服务器<br>第二次握手：服务端接收到了包，给客户端回传标记位（SYN=1, ACK=1），seq=y，ack=x+1的数据包<br>第三次握手：客户端再发送标记位（ACK=1)，seq=x+1，ack=y+1，数据包确认连接</p>
+<h3 id="为啥需要三次握手"><a href="#为啥需要三次握手" class="headerlink" title="为啥需要三次握手"></a>为啥需要三次握手</h3><p>三次握手是确认双方可靠传输的最少握手次数，即双方都有正常收发功能。<br>第一次握手：客户端正常发<br>第二次握手：服务端正常收，发<br>第三次握手：客户端正常收（发）</p>
+<h2 id="IP-DNS"><a href="#IP-DNS" class="headerlink" title="IP DNS"></a>IP DNS</h2><p>IP：利用ip地址与MAC地址进行网络层的数据寻址与传输<br>DNS：ip地址不符合人的记忆习惯，DNS提供域名到ip的相互转换功能。（处于应用层）</p>
+<h3 id="四次挥手"><a href="#四次挥手" class="headerlink" title="四次挥手"></a>四次挥手</h3><p>第一次挥手：客户端发送（FIN=1，序号seq=u），并且停止再发送数据，等待服务端应答；<br>第二次挥手：服务端收到后即发送（ACK=1，ack=u+1，序号seq=v）<br>第三次挥手：服务端数据传输完成后，再发送（ACK=1，ack=u+1，序号seq=w）；<br>第四次挥手：客户端收到后，再发送确认报文段（ACK=1，ack=w+1，序号seq=u+1），时间计数超过后自动释放。</p>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><div id="refer_0"></div>
+- [1] [百度百科](https://baike.baidu.com/item/TCP%2FIP协议/212915?fromtitle=tcp%2Fip&fromid=214077&fr=aladdin#reference-[1]-7649-wrap)
+]]></content>
+  </entry>
+  <entry>
+    <title>拷贝构造函数</title>
+    <url>/2020/05/08/%E6%8B%B7%E8%B4%9D%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0%E4%B8%8E%E7%A7%BB%E5%8A%A8%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0/</url>
+    <content><![CDATA[<h2 id="初始化与赋值"><a href="#初始化与赋值" class="headerlink" title="初始化与赋值"></a>初始化与赋值</h2><p>声明对象时同时赋值 -&gt; 初始化，初始化只有一次<br>声明对象后，再赋值 -&gt; （=）赋值，赋值可以多次  </p>
+<ul>
+<li>初始化调用的是拷贝构造函数（构造函数就是用来初始化对象的）</li>
+<li>赋值调用的是重载 = 运算符（两个对象都已存在并完成初始化）</li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">A</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    A() &#123;</span><br><span class="line">        <span class="built_in">cout</span> &lt;&lt; <span class="string">"A class -&gt; Default Constructor"</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    A(<span class="keyword">const</span> <span class="keyword">int</span>&amp; val) &#123;</span><br><span class="line">        <span class="built_in">cout</span> &lt;&lt; <span class="string">"A class -&gt; Parameter Constructor"</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    A(<span class="keyword">const</span> A&amp; tmp) &#123;   <span class="comment">// 拷贝构造函数</span></span><br><span class="line">        <span class="built_in">cout</span> &lt;&lt; <span class="string">"A class -&gt; CopyConstructor"</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    A&amp; <span class="keyword">operator</span>=(<span class="keyword">const</span> A&amp; tmp) &#123;    <span class="comment">// 重载运算符=</span></span><br><span class="line">        <span class="keyword">if</span> (<span class="keyword">this</span> != &amp;tmp) &#123;</span><br><span class="line">            <span class="comment">// pass</span></span><br><span class="line">        &#125;</span><br><span class="line">        <span class="built_in">cout</span> &lt;&lt; <span class="string">"A class -&gt; = operator"</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">        <span class="keyword">return</span> *<span class="keyword">this</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    ~A() &#123;</span><br><span class="line">        <span class="built_in">cout</span> &lt;&lt; <span class="string">"A class -&gt; DeConstructor"</span> &lt;&lt; <span class="built_in">endl</span>; </span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="function">A <span class="title">obja</span><span class="params">(<span class="number">5</span>)</span></span>;    </span><br><span class="line">    <span class="function">A <span class="title">objb</span><span class="params">(obja)</span></span>;   <span class="comment">// 初始化，调用拷贝构造函数</span></span><br><span class="line">    A objb = obja;  <span class="comment">// 初始化，调用拷贝构造函数</span></span><br><span class="line">    A objc;</span><br><span class="line">    objc = obja;    <span class="comment">// 赋值，调用重载运算符操作</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="拷贝构造函数"><a href="#拷贝构造函数" class="headerlink" title="拷贝构造函数"></a>拷贝构造函数</h2><p>以下三种情况都会调用拷贝构造函数：</p>
+<ul>
+<li>一个对象以值传递的方式传入函数体（参数） </li>
+<li>一个对象以值传递的方式从函数返回 </li>
+<li>一个对象需要通过另外一个对象进行初始化</li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="function">A <span class="title">GetObject</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    A tmpa;</span><br><span class="line">    <span class="keyword">return</span> tmpa;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">main:</span><br><span class="line">A obja = GetObject();</span><br></pre></td></tr></table></figure>
+<p>上面这段代码调用了3次构造函数，3次析构函数<br><img src="initialize/result_0.png" alt="avatar"></p>
+<ol>
+<li>GetObject().tmpa 调用默认构造函数</li>
+<li>GetObject().tmpa -&gt; 返回值X，调用拷贝构造函数</li>
+<li>GetObject().tmpa 调用析构函数</li>
+<li>返回值X -&gt; obja，调用拷贝构造函数</li>
+<li>返回值X 调用析构函数</li>
+<li>obja 调用析构函数</li>
+</ol>
+<p>P.S. 需要加上“-fno-elide-constructors”选项，不然gcc编译器会对返回值进行优化，即RVO（return value optimazation）。</p>
+<h2 id="移动构造函数"><a href="#移动构造函数" class="headerlink" title="移动构造函数"></a>移动构造函数</h2><p>浅拷贝：对象属性值的拷贝，如果对象含有指针，则两对象指针值一样，指向空间也一样，后面析构时（释放指针空间）导致重复释放。<br>深拷贝：针对浅拷贝指针问题，显式实现拷贝构造函数，在函数内部重新申请一块空间。两对象指针指向空间独立。</p>
+<p>然而深拷贝就引入效率问题，如果对象拷贝完成后就不再使用了，那么反复申请释放内存空间开销就比较大了。其实这可以通过特殊“浅拷贝”——移动构造函数来实现。</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">A</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    A(<span class="keyword">int</span> val) &#123;</span><br><span class="line">        len = val;</span><br><span class="line">        data = <span class="keyword">new</span> <span class="keyword">int</span>[len];</span><br><span class="line">        <span class="built_in">cout</span> &lt;&lt; <span class="string">"A class -&gt; Parameter Constructor"</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    A(<span class="keyword">const</span> A&amp; tmp) &#123;</span><br><span class="line">        len = tmp.len;</span><br><span class="line">        data = <span class="keyword">new</span> <span class="keyword">int</span>[len];</span><br><span class="line">        <span class="built_in">cout</span> &lt;&lt; <span class="string">"A class -&gt; CopyConstructor"</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    A(A&amp;&amp; tmp) &#123;</span><br><span class="line">        len = tmp.len;</span><br><span class="line">        data = tmp.data;</span><br><span class="line">        tmp.data = <span class="literal">nullptr</span>;</span><br><span class="line">        <span class="built_in">cout</span> &lt;&lt; <span class="string">"A class -&gt; MoveConstructor"</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    ~A() &#123;</span><br><span class="line">        <span class="keyword">delete</span>[] data;</span><br><span class="line">        <span class="built_in">cout</span> &lt;&lt; <span class="string">"A class -&gt; DeConstructor"</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">int</span>* <span class="title">GetDataAddress</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> data;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    <span class="keyword">int</span> *data;</span><br><span class="line">    <span class="keyword">int</span> len;</span><br><span class="line">    <span class="built_in">string</span> name;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="function">A <span class="title">tmpa</span><span class="params">(<span class="number">10</span>)</span></span>;</span><br><span class="line">    <span class="function">A <span class="title">tmpb</span><span class="params">(<span class="built_in">move</span>(tmpa))</span></span>;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; tmpa.GetDataAddress() &lt;&lt; <span class="built_in">endl</span>;  <span class="comment">// 有点违规，理论上move调用后，不应该再使用tmpa</span></span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; tmpb.GetDataAddress() &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>]]></content>
+      <categories>
+        <category>学习总结</category>
+      </categories>
+      <tags>
+        <tag>C++</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>景深vs光圈</title>
+    <url>/2022/04/16/%E5%85%89%E5%9C%88vs%E6%99%AF%E6%B7%B1/</url>
+    <content><![CDATA[<h1 id="光圈"><a href="#光圈" class="headerlink" title="光圈"></a>光圈</h1><p>光圈越大，进光量越多，光圈越小，进光量越少。</p>
+<p><img src="https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fupload-images.jianshu.io%2Fupload_images%2F3914884-274005b951d17b2f.jpg&refer=http%3A%2F%2Fupload-images.jianshu.io&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=auto?sec=1652691547&t=263bf81ffd7b8620ad63c178d02e32c4" alt="光圈大小"></p>
+<p>F=镜头焦距/光孔直径。因此，对同一焦距的镜头来说，f系数越小，表示光圈越大；系数越大，表示光圈越小。</p>
+<h1 id="景深"><a href="#景深" class="headerlink" title="景深"></a>景深</h1><p>小景深：画面中清晰范围比较少就是小景深；</p>
+<p>大景深：画面中清晰范围比较大叫做大景深</p>
+<p>影响景深的有三种方法来控制景深，光圈的使用；镜头焦距段的长短；从相机到物体的距离。光圈越大，景深越小，光圈越小，景深越大；焦距越长景深越小，焦距越短景深越大。</p>
+<p><img src="https://gimg2.baidu.com/image_search/src=http%3A%2F%2F5b0988e595225.cdn.sohucs.com%2Fq_70%2Cc_zoom%2Cw_640%2Fimages%2F20180829%2F480471942ce94e4fb830907ba2a63fa2.jpeg&refer=http%3A%2F%2F5b0988e595225.cdn.sohucs.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=auto?sec=1652692102&t=37df5a51a89769805ef3864ac713b728" alt="景深大小"></p>
+]]></content>
+      <tags>
+        <tag>摄影</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>摩尔投票算法</title>
+    <url>/2020/05/04/%E6%91%A9%E5%B0%94%E6%8A%95%E7%A5%A8%E7%AE%97%E6%B3%95/</url>
+    <content><![CDATA[<h2 id="摩尔投票算法"><a href="#摩尔投票算法" class="headerlink" title="摩尔投票算法"></a>摩尔投票算法</h2><p>摩尔投票算法是一种使用线性时间和常数空间查找大部分元素序列的算法。</p>
+<h3 id="leetcode-169"><a href="#leetcode-169" class="headerlink" title="leetcode 169"></a>leetcode 169</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">给定一个大小为 n 的数组，找到其中的多数元素。多数元素是指在数组中出现次数大于 ⌊ n&#x2F;2 ⌋ 的元素。</span><br><span class="line">你可以假设数组是非空的，并且给定的数组总是存在多数元素。</span><br><span class="line"></span><br><span class="line">来源链接：https:&#x2F;&#x2F;leetcode-cn.com&#x2F;problems&#x2F;majority-element</span><br></pre></td></tr></table></figure>
+<h4 id="解题思路："><a href="#解题思路：" class="headerlink" title="解题思路："></a>解题思路：</h4><p>显然，出现次数大于 n/2 的元素只有1个；<br>这题用排序，计数法当然也可以计算出来，时间复杂度O(nlogn)，却不是最优的。摩尔投票法可以达到O(n)时间复杂度和O(1)的空间复杂度。<br>通俗来讲，摩尔投票法就是对拼法（“同归于尽”法），从数组中选择两个不同的数，删掉它们，遍历完数组，那么剩余的数就是多数元素。</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">majorityElement</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; nums)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> num = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">int</span> cnt = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">auto</span> one : nums) &#123;</span><br><span class="line">            <span class="keyword">if</span> (one == num) &#123;</span><br><span class="line">                cnt += <span class="number">1</span>;</span><br><span class="line">            &#125; <span class="keyword">else</span> <span class="keyword">if</span> (cnt == <span class="number">0</span>) &#123;</span><br><span class="line">                num = one;</span><br><span class="line">                cnt = <span class="number">1</span>;</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                cnt -= <span class="number">1</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> num;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h3 id="leetcode-229"><a href="#leetcode-229" class="headerlink" title="leetcode 229"></a>leetcode 229</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">给定一个大小为 n 的数组，找出其中所有出现超过 ⌊ n&#x2F;3 ⌋ 次的元素。</span><br><span class="line">说明: 要求算法的时间复杂度为 O(n)，空间复杂度为 O(1)。</span><br><span class="line">来源链接：https:&#x2F;&#x2F;leetcode-cn.com&#x2F;problems&#x2F;majority-element-ii&#x2F;</span><br></pre></td></tr></table></figure>
+<h4 id="解题思路"><a href="#解题思路" class="headerlink" title="解题思路"></a>解题思路</h4><p>类似地，先求出该数组可能解的个数，显然，出现次数超过 n/3 的元素最多2个，最少1个（有解的情况下）。  </p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; <span class="title">majorityElement</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; nums)</span> </span>&#123;</span><br><span class="line">        <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; res;</span><br><span class="line">        <span class="keyword">int</span> num0 = <span class="number">0</span>, num1 = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">int</span> cnt0 = <span class="number">0</span>, cnt1 = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">auto</span> one : nums) &#123;</span><br><span class="line">            <span class="keyword">if</span> (one == num0) &#123;</span><br><span class="line">                cnt0 += <span class="number">1</span>;</span><br><span class="line">            &#125; <span class="keyword">else</span> <span class="keyword">if</span> (one == num1) &#123;</span><br><span class="line">                cnt1 += <span class="number">1</span>;</span><br><span class="line">            &#125; <span class="keyword">else</span> <span class="keyword">if</span> (cnt0 == <span class="number">0</span>) &#123;</span><br><span class="line">                num0 = one;</span><br><span class="line">                cnt0 = <span class="number">1</span>;</span><br><span class="line">            &#125; <span class="keyword">else</span> <span class="keyword">if</span> (cnt1 == <span class="number">0</span>) &#123;</span><br><span class="line">                num1 = one;</span><br><span class="line">                cnt1 = <span class="number">1</span>;</span><br><span class="line">            &#125; </span><br><span class="line">            <span class="keyword">else</span> &#123;</span><br><span class="line">                cnt0 -= <span class="number">1</span>;</span><br><span class="line">                cnt1 -= <span class="number">1</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        cnt0 = cnt1 = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">auto</span> one : nums) &#123;</span><br><span class="line">            <span class="keyword">if</span> (one == num0) &#123;</span><br><span class="line">                cnt0 += <span class="number">1</span>;</span><br><span class="line">            &#125; <span class="keyword">else</span> <span class="keyword">if</span> (one == num1) &#123;</span><br><span class="line">                cnt1 += <span class="number">1</span>;</span><br><span class="line">            &#125; </span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (cnt0 &gt; nums.<span class="built_in">size</span>() / <span class="number">3</span>) &#123;</span><br><span class="line">            res.push_back(num0);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (cnt1 &gt; nums.<span class="built_in">size</span>() / <span class="number">3</span>) &#123;</span><br><span class="line">            res.push_back(num1);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> res;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+]]></content>
+      <categories>
+        <category>学习总结</category>
+      </categories>
+      <tags>
+        <tag>算法</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>智能指针</title>
     <url>/2020/04/12/%E6%99%BA%E8%83%BD%E6%8C%87%E9%92%88/</url>
     <content><![CDATA[<h2 id="智能指针"><a href="#智能指针" class="headerlink" title="智能指针"></a>智能指针</h2><p>头文件 <code>#include &lt;memory&gt;</code>  </p>
@@ -237,18 +201,54 @@
       </tags>
   </entry>
   <entry>
-    <title>景深vs光圈</title>
-    <url>/2022/04/16/%E5%85%89%E5%9C%88vs%E6%99%AF%E6%B7%B1/</url>
-    <content><![CDATA[<h1 id="光圈"><a href="#光圈" class="headerlink" title="光圈"></a>光圈</h1><p>光圈越大，进光量越多，光圈越小，进光量越少。</p>
-<p><img src="https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fupload-images.jianshu.io%2Fupload_images%2F3914884-274005b951d17b2f.jpg&refer=http%3A%2F%2Fupload-images.jianshu.io&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=auto?sec=1652691547&t=263bf81ffd7b8620ad63c178d02e32c4" alt="光圈大小"></p>
-<p>F=镜头焦距/光孔直径。因此，对同一焦距的镜头来说，f系数越小，表示光圈越大；系数越大，表示光圈越小。</p>
-<h1 id="景深"><a href="#景深" class="headerlink" title="景深"></a>景深</h1><p>小景深：画面中清晰范围比较少就是小景深；</p>
-<p>大景深：画面中清晰范围比较大叫做大景深</p>
-<p>影响景深的有三种方法来控制景深，光圈的使用；镜头焦距段的长短；从相机到物体的距离。光圈越大，景深越小，光圈越小，景深越大；焦距越长景深越小，焦距越短景深越大。</p>
-<p><img src="https://gimg2.baidu.com/image_search/src=http%3A%2F%2F5b0988e595225.cdn.sohucs.com%2Fq_70%2Cc_zoom%2Cw_640%2Fimages%2F20180829%2F480471942ce94e4fb830907ba2a63fa2.jpeg&refer=http%3A%2F%2F5b0988e595225.cdn.sohucs.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=auto?sec=1652692102&t=37df5a51a89769805ef3864ac713b728" alt="景深大小"></p>
+    <title>Forward &amp; 完美转发</title>
+    <url>/2020/05/23/Forward%20&amp;%20%E5%AE%8C%E7%BE%8E%E8%BD%AC%E5%8F%91/</url>
+    <content><![CDATA[<h2 id="Forward"><a href="#Forward" class="headerlink" title="Forward"></a>Forward</h2><p>由来：C++规定函数参数都是左值（引用），那么模板函数中的参数，不管实参是左值（引用）还是右值（引用），形参都是左值（引用）。</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">test</span><span class="params">(<span class="keyword">int</span>&amp; a)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="string">"call &amp; test"</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">test</span><span class="params">(<span class="keyword">int</span>&amp;&amp; a)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="string">"call &amp;&amp; test"</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">func</span><span class="params">(T&amp;&amp; a)</span> </span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    test(a);</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> a = <span class="number">10</span>;</span><br><span class="line">    func(a);</span><br><span class="line">    func(<span class="number">10</span>);</span><br><span class="line">    <span class="keyword">int</span> &amp;b = a;</span><br><span class="line">    func(b);</span><br><span class="line">    func(<span class="built_in">move</span>(b));</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>输出如下：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">call &amp; test</span><br><span class="line">call &amp; test</span><br><span class="line">call &amp; test</span><br><span class="line">call &amp; test</span><br></pre></td></tr></table></figure>
+<p>都是调用的左值引用参数的test函数</p>
+<h2 id="完美转发"><a href="#完美转发" class="headerlink" title="完美转发"></a>完美转发</h2><p>forward就是为了解决这个问题的，即把参数的引用类别（左值引用/右值引用）完美地传达给下一级函数。<br>修改上面模板函数，如下：</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">func</span><span class="params">(T&amp;&amp; a)</span> </span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    test(forward&lt;T&gt;(a));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>输出结果如下：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">call &amp; test</span><br><span class="line">call &amp;&amp; test</span><br><span class="line">call &amp; test</span><br><span class="line">call &amp;&amp; test</span><br></pre></td></tr></table></figure>]]></content>
+  </entry>
+  <entry>
+    <title>Hello World</title>
+    <url>/2020/04/05/hello-world/</url>
+    <content><![CDATA[<p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p>
+<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p>
+<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p>
+<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p>
+<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/one-command-deployment.html" target="_blank" rel="noopener">Deployment</a></p>
 ]]></content>
+  </entry>
+  <entry>
+    <title>左值与右值</title>
+    <url>/2020/05/08/%E5%B7%A6%E5%80%BC%E4%B8%8E%E5%8F%B3%E5%80%BC/</url>
+    <content><![CDATA[<h2 id="左值与右值"><a href="#左值与右值" class="headerlink" title="左值与右值"></a>左值与右值</h2><p>通俗地说。以赋值符号 = 为界，= 左边的就是左值，= 右边就是右值。 int a = b; a就是左值，b作为右值赋值给a（b的右值赋值给a）。左值右值概念是相对而言的。<br>其中左值也分为可赋值左值和不可赋值左值（const）。<br>其实更深层次可以理解为，L-value中的L指的是Location，表示可寻址。Avalue (computer science)that has an address.<br>R-value中的R指的是Read，表示可读。in computer science, a value that does not have an address in a computer language.</p>
+<h2 id="左值引用与右值引用"><a href="#左值引用与右值引用" class="headerlink" title="左值引用与右值引用"></a>左值引用与右值引用</h2><h3 id="来源"><a href="#来源" class="headerlink" title="来源"></a>来源</h3><p>C++11之前的引用都是左值引用，C++11引入了右值引用，是为了避免（节省）临时变量申请释放造成的开销。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">作为一种追求执行效率的语言，C++在用临时对象或函数返回值给左值对象赋值时的深度拷贝（deep copy）一直受到诟病。考虑到临时对象的生命期仅在表达式中持续，如果把临时对象的内容直接移动（move）给被赋值的左值对象，效率改善将是显著的。这就是移动语义的来源。 </span><br><span class="line">右值引用就是为了实现移动语义与完美转发所需要而设计出来的新的数据类型。</span><br><span class="line">——https:&#x2F;&#x2F;wiki.hk.xileso.top&#x2F;wiki&#x2F;右值引用</span><br></pre></td></tr></table></figure>
+
+<p>move函数可以（无条件）把一个左值转换成右值引用。</p>
+<h2 id="异常案例"><a href="#异常案例" class="headerlink" title="异常案例"></a>异常案例</h2><p>Note also that returning an rvalue reference is an error if the returned object is a local nonstatic object:</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">X&amp;&amp; foo ()</span><br><span class="line">&#123;</span><br><span class="line">    X x;</span><br><span class="line">    ...</span><br><span class="line">    return x; &#x2F;&#x2F; ERROR: returns reference to nonexisting object</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>具名的右值引用被当作左值<br>如果没有显式写出移动构造函数，默认调用拷贝构造函数，没有默认移动构造函数之说。</p>
+]]></content>
+      <categories>
+        <category>学习总结</category>
+      </categories>
       <tags>
-        <tag>摄影</tag>
+        <tag>C++</tag>
       </tags>
   </entry>
 </search>
