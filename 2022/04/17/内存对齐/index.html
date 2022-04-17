@@ -9,7 +9,7 @@
     
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
   <title>
-    景深vs光圈 |  Kevin
+    内存对齐 |  Kevin
   </title>
   <meta name="generator" content="hexo-theme-yilia-plus">
   
@@ -36,7 +36,7 @@
   <div id="app">
     <main class="content on">
       <section class="outer">
-  <article id="摄影-光圈vs景深" class="article article-type-摄影" itemscope
+  <article id="post-内存对齐" class="article article-type-post" itemscope
   itemprop="blogPost" data-scroll-reveal>
 
   <div class="article-inner">
@@ -44,7 +44,7 @@
     <header class="article-header">
        
 <h1 class="article-title sea-center" style="border-left:0" itemprop="name">
-  景深vs光圈
+  内存对齐
 </h1>
  
 
@@ -53,10 +53,14 @@
 
     
     <div class="article-meta">
-      <a href="/2022/04/16/%E5%85%89%E5%9C%88vs%E6%99%AF%E6%B7%B1/" class="article-date">
-  <time datetime="2022-04-16T08:50:39.000Z" itemprop="datePublished">2022-04-16</time>
+      <a href="/2022/04/17/%E5%86%85%E5%AD%98%E5%AF%B9%E9%BD%90/" class="article-date">
+  <time datetime="2022-04-17T12:57:07.000Z" itemprop="datePublished">2022-04-17</time>
 </a>
       
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/redis%E6%BA%90%E7%A0%81/">redis源码</a>
+  </div>
+
       
       
 <div class="word_count">
@@ -64,7 +68,7 @@
         <span class="post-meta-item-icon">
             <i class="ri-quill-pen-line"></i>
             <span class="post-meta-item-text"> Word count:</span>
-            <span class="post-count">169</span>
+            <span class="post-count">277</span>
         </span>
     </span>
 
@@ -98,13 +102,22 @@
       
 
       
-      <h1 id="光圈"><a href="#光圈" class="headerlink" title="光圈"></a>光圈</h1><p>光圈越大，进光量越多，光圈越小，进光量越少。</p>
-<p><img src="https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fupload-images.jianshu.io%2Fupload_images%2F3914884-274005b951d17b2f.jpg&refer=http%3A%2F%2Fupload-images.jianshu.io&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=auto?sec=1652691547&t=263bf81ffd7b8620ad63c178d02e32c4" alt="光圈大小"></p>
-<p>F=镜头焦距/光孔直径。因此，对同一焦距的镜头来说，f系数越小，表示光圈越大；系数越大，表示光圈越小。</p>
-<h1 id="景深"><a href="#景深" class="headerlink" title="景深"></a>景深</h1><p>小景深：画面中清晰范围比较少就是小景深；</p>
-<p>大景深：画面中清晰范围比较大叫做大景深</p>
-<p>影响景深的有三种方法来控制景深，光圈的使用；镜头焦距段的长短；从相机到物体的距离。光圈越大，景深越小，光圈越小，景深越大；焦距越长景深越小，焦距越短景深越大。</p>
-<p><img src="https://gimg2.baidu.com/image_search/src=http%3A%2F%2F5b0988e595225.cdn.sohucs.com%2Fq_70%2Cc_zoom%2Cw_640%2Fimages%2F20180829%2F480471942ce94e4fb830907ba2a63fa2.jpeg&refer=http%3A%2F%2F5b0988e595225.cdn.sohucs.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=auto?sec=1652692102&t=37df5a51a89769805ef3864ac713b728" alt="景深大小"></p>
+      <h1 id="attribute"><a href="#attribute" class="headerlink" title="attribute"></a>attribute</h1><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">__attribute__ ((__packed__))</span><br></pre></td></tr></table></figure>
+
+<p>GCC特有的语法，告诉编译器取消结构体在编译过程中的优化字节对齐，按照实际占用字节数进行对齐</p>
+<p>分析代码（摘自sds.h）</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> __<span class="title">attribute__</span> ((__<span class="title">packed__</span>)) <span class="title">sdshdr_packed</span> &#123;</span></span><br><span class="line">    <span class="keyword">uint32_t</span> len; <span class="comment">/* used */</span></span><br><span class="line">    <span class="keyword">uint32_t</span> alloc; <span class="comment">/* excluding the header and null terminator */</span></span><br><span class="line">    <span class="keyword">unsigned</span> <span class="keyword">char</span> flags; <span class="comment">/* 3 lsb of type, 5 unused bits */</span></span><br><span class="line">    <span class="keyword">char</span> buf[];</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>sizeof(sdshdr_packed)大小为9（4 + 4 + 1，其中char buf[]未分配空间，无法统计到），如果字节对齐后，其大小为12。</p>
+<h1 id="字节对齐"><a href="#字节对齐" class="headerlink" title="字节对齐"></a>字节对齐</h1><p>总的来说，字节对齐有以下准则：</p>
+<ul>
+<li><strong>结构体变量的首地址能够被其对齐字节数大小所整除</strong>。</li>
+<li><strong>结构体每个成员相对结构体首地址的偏移都是成员大小的整数倍</strong>，如不满足，对前一个成员填充字节以满足。</li>
+<li><strong>结构体的总大小为结构体对最大成员大小的整数倍</strong>，如不满足，最后填充字节以满足。</li>
+</ul>
+<p>我们通过一个小例子来说明是如何对齐的。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">A</span> &#123;</span></span><br><span class="line">    <span class="keyword">int</span> a;</span><br><span class="line">    <span class="keyword">char</span> b;</span><br><span class="line">    short c;</span><br><span class="line">&#125;; <span class="comment">// sizeof = 8</span></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">B</span> &#123;</span></span><br><span class="line">    <span class="keyword">char</span> b;</span><br><span class="line">    <span class="keyword">int</span> a;</span><br><span class="line">    short c;</span><br><span class="line">&#125;; <span class="comment">// sizeof = 12</span></span><br></pre></td></tr></table></figure>
+
 
       
       <!-- reward -->
@@ -159,14 +172,14 @@
     <a class="modal-close" href="javascript:;"><i class="ri-close-circle-line"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//api.qrserver.com/v1/create-qr-code/?size=150x150&data=http://yoursite.com/2022/04/16/%E5%85%89%E5%9C%88vs%E6%99%AF%E6%B7%B1/" alt="微信分享二维码">
+      <img src="//api.qrserver.com/v1/create-qr-code/?size=150x150&data=http://yoursite.com/2022/04/17/%E5%86%85%E5%AD%98%E5%AF%B9%E9%BD%90/" alt="微信分享二维码">
     </div>
 </div>
 
 <div id="share-mask"></div>
       
       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E6%91%84%E5%BD%B1/" rel="tag">摄影</a></li></ul>
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/C/" rel="tag">C</a></li></ul>
 
 
     </footer>
@@ -177,19 +190,10 @@
   
   <nav class="article-nav">
     
-      <a href="/2022/04/17/%E5%86%85%E5%AD%98%E5%AF%B9%E9%BD%90/" class="article-nav-link">
-        <strong class="article-nav-caption">上一篇</strong>
-        <div class="article-nav-title">
-          
-            内存对齐
-          
-        </div>
-      </a>
     
-    
-      <a href="/2020/06/26/TCP-IP%E5%8D%8F%E8%AE%AE%E7%B0%87/" class="article-nav-link">
+      <a href="/2022/04/16/%E5%85%89%E5%9C%88vs%E6%99%AF%E6%B7%B1/" class="article-nav-link">
         <strong class="article-nav-caption">下一篇</strong>
-        <div class="article-nav-title">TCP/IP协议簇</div>
+        <div class="article-nav-title">景深vs光圈</div>
       </a>
     
   </nav>
